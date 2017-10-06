@@ -26,7 +26,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
     private Context mContext;
 
     public interface OnRecipeSelectedListener {
-        void onRecipeSelected(int id);
+        void onRecipeSelected(int position);
     }
 
     public RecipeAdapter(Context mContext) {
@@ -67,13 +67,21 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
         notifyDataSetChanged();
     }
 
-    public class RecipeAdapterViewHolder extends RecyclerView.ViewHolder {
-
+    public class RecipeAdapterViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener {
+        // TODO: 10/5/17 try OnTouchListener
         TextView recipeName;
 
         public RecipeAdapterViewHolder(View view) {
             super(view);
             recipeName = (TextView) view.findViewById(R.id.tv_recipe_name);
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View mView) {
+            int adapterPosition = getAdapterPosition();
+            callback.onRecipeSelected(adapterPosition);
         }
     }
 }

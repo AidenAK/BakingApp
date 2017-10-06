@@ -2,6 +2,7 @@ package com.example.doelay.bakingapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity
         recipeRecyclerView.setLayoutManager(layoutManager);
         recipeRecyclerView.setHasFixedSize(true);
 
+
         recipeAdapter = new RecipeAdapter(this);
         recipeRecyclerView.setAdapter(recipeAdapter);
 
@@ -73,7 +75,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onRecipeSelected(int id) {
+    public void onRecipeSelected(int position) {
         // TODO: 10/5/17 open recipe detail
+        Log.d(TAG, "onRecipeSelected: "+ position);
     }
 }
