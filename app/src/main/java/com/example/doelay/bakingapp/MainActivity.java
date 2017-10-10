@@ -1,5 +1,6 @@
 package com.example.doelay.bakingapp;
 
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,6 +17,7 @@ import com.example.doelay.bakingapp.model.Recipe;
 import com.example.doelay.bakingapp.networking.ApiBaseUrl;
 import com.example.doelay.bakingapp.networking.ApiService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindInt;
@@ -38,10 +40,13 @@ public class MainActivity extends AppCompatActivity
     int numberOfColumn;
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String RECIPE_RECYCLER_VIEW_STATE = "recipe_recycler_view_state";
+    private static final String DOWNLOADED_RECIPE_LIST = "downloaded_recipe_list";
 
     private RecipeAdapter recipeAdapter;
     private List<Recipe> recipeList;// to restore data
     private GridLayoutManager layoutManager;
+    private Parcelable recyclerViewState;
 
 
     @Override
@@ -55,13 +60,43 @@ public class MainActivity extends AppCompatActivity
         recipeRecyclerView.setLayoutManager(layoutManager);
         recipeRecyclerView.setHasFixedSize(true);
 
-
         recipeAdapter = new RecipeAdapter(this);
         recipeRecyclerView.setAdapter(recipeAdapter);
 
+        if(savedInstanceState == null) {
+            makeApiRequest();
+        } else {
+            recipeList = savedInstanceState.getParcelableArrayList(DOWNLOADED_RECIPE_LIST);
+            recipeAdapter.setRecipeList(recipeList);
+            recyclerViewState = savedInstanceState.getParcelable(RECIPE_RECYCLER_VIEW_STATE);
+        }
 
-        makeApiRequest();
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //save the recycler view state
+        recyclerViewState = layoutManager.onSaveInstanceState();
+        outState.putParcelable(RECIPE_RECYCLER_VIEW_STATE, recyclerViewState);
+        //save the downloaded recipe list
+        outState.putParcelableArrayList(DOWNLOADED_RECIPE_LIST, (ArrayList<Recipe>) recipeList);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //restore the recycler view state
+        if(recyclerViewState != null) {
+            layoutManager.onRestoreInstanceState(recyclerViewState);
+        }
+        showRecipeList();
     }
 
     private void makeApiRequest() {
@@ -85,7 +120,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                // TODO: 10/4/17 show error message.
+                showErrorMessage();
                 Log.d(TAG, "onFailure: "+ t.getMessage());
             }
         });
