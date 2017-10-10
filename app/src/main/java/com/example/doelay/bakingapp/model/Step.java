@@ -4,10 +4,13 @@ package com.example.doelay.bakingapp.model;
  * Created by doelay on 10/4/17.
  */
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Step {
+public class Step implements Parcelable{
 
     @SerializedName("id")
     @Expose
@@ -24,6 +27,36 @@ public class Step {
     @SerializedName("thumbnailURL")
     @Expose
     private String thumbnailURL;
+
+    public static final Parcelable.Creator<Step> CREATOR = new Parcelable.Creator<Step>() {
+        @Override
+        public Step createFromParcel(Parcel source) {
+            return new Step(source);
+        }
+
+        @Override
+        public Step[] newArray(int size) {
+            return new Step[size];
+        }
+    };
+
+    private Step(Parcel in) {
+        this.id = (Integer) in.readValue(getClass().getClassLoader());
+        this.shortDescription = (String) in.readValue(getClass().getClassLoader());
+        this.description = (String) in.readValue(getClass().getClassLoader());
+        this.videoURL = (String) in.readValue(getClass().getClassLoader());
+        this.thumbnailURL = (String) in.readValue(getClass().getClassLoader());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
 
     public int getId() {
         return id;
