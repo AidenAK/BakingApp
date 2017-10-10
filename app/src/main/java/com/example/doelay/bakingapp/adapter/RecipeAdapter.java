@@ -14,6 +14,11 @@ import com.example.doelay.bakingapp.model.Recipe;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+import static com.example.doelay.bakingapp.R.id.tv_recipe_name;
+
 /**
  * Created by doelay on 10/5/17.
  */
@@ -69,12 +74,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
 
     public class RecipeAdapterViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
+
         // TODO: 10/5/17 try OnTouchListener
-        TextView recipeName;
+        @BindView(tv_recipe_name) TextView recipeName;
 
         public RecipeAdapterViewHolder(View view) {
             super(view);
-            recipeName = (TextView) view.findViewById(R.id.tv_recipe_name);
+            ButterKnife.bind(this, view);
             view.setOnClickListener(this);
         }
 
