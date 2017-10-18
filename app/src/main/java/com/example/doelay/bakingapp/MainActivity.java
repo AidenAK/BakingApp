@@ -1,5 +1,6 @@
 package com.example.doelay.bakingapp;
 
+import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -128,8 +129,20 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onRecipeSelected(int position) {
-        // TODO: 10/5/17 open recipe detail
-        Log.d(TAG, "onRecipeSelected: "+ position);
+
+        // TODO: 10/17/17 start RecipeDetailActivity and pass the data
+        Log.d(TAG, "onRecipeSelected: "+ recipeList.get(position).getName());
+
+        Recipe recipeSelected = recipeList.get(position);
+
+        Intent intent = new Intent(this, RecipeDetailActivity.class);
+        intent.putExtra("recipe_selected", recipeSelected);
+
+        if(intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            Log.d(TAG, "onRecipeSelected: No activity to handle the intent!");
+        }
     }
     private void showLoadingBar() {
         loadingBar.setVisibility(View.VISIBLE);
