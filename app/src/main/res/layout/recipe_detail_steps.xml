@@ -14,11 +14,11 @@
         android:textSize="24sp"
         android:textStyle="bold"/>
 
-    <fragment
-        android:name="com.example.doelay.bakingapp.IngredientFragment"
-        android:id="@+id/ingredient_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    <!--<fragment-->
+        <!--android:name="com.example.doelay.bakingapp.IngredientFragment"-->
+        <!--android:id="@+id/ingredient_fragment"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"/>-->
 
     <!--<fragment-->
         <!--android:name="com.example.doelay.bakingapp.StepFragment"-->

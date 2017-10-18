@@ -29,7 +29,10 @@ public class Step implements Parcelable{
     private String thumbnailURL;
 
     public static final Parcelable.Creator<Step> CREATOR = new Parcelable.Creator<Step>() {
-        @Override
+
+        @SuppressWarnings({
+                "unchecked"
+        })
         public Step createFromParcel(Parcel source) {
             return new Step(source);
         }
@@ -41,11 +44,11 @@ public class Step implements Parcelable{
     };
 
     private Step(Parcel in) {
-        this.id = (Integer) in.readValue(getClass().getClassLoader());
-        this.shortDescription = (String) in.readValue(getClass().getClassLoader());
-        this.description = (String) in.readValue(getClass().getClassLoader());
-        this.videoURL = (String) in.readValue(getClass().getClassLoader());
-        this.thumbnailURL = (String) in.readValue(getClass().getClassLoader());
+        this.id = in.readInt();
+        this.shortDescription = in.readString();
+        this.description = in.readString();
+        this.videoURL = in.readString();
+        this.thumbnailURL = in.readString();
     }
 
     @Override
@@ -55,6 +58,13 @@ public class Step implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(shortDescription);
+        dest.writeString(description);
+        dest.writeString(videoURL);
+        dest.writeString(thumbnailURL);
+    }
+    public Step() {
 
     }
 

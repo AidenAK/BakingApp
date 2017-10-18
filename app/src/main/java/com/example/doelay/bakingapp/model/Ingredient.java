@@ -24,8 +24,10 @@ public class Ingredient implements Parcelable{
 
 
     public static final Parcelable.Creator<Ingredient> CREATOR = new Parcelable.Creator<Ingredient>() {
-        @Override
-        public Ingredient createFromParcel(Parcel source) {
+
+        @SuppressWarnings({
+                "unchecked"
+        })        public Ingredient createFromParcel(Parcel source) {
             return new Ingredient(source);
         }
 
@@ -36,22 +38,25 @@ public class Ingredient implements Parcelable{
     };
 
     private Ingredient (Parcel in) {
-//        this.quantity = in.readFloat();
-        this.quantity = ((Float) in.readValue((getClass().getClassLoader())));
-        this.measure = ((String) in.readValue((String.class.getClassLoader())));
-        this.ingredient = ((String) in.readValue((String.class.getClassLoader())));
+        this.quantity = in.readFloat();
+        this.measure = in.readString();
+        this.ingredient = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(quantity);
-        dest.writeValue(measure);
-        dest.writeValue(ingredient);
+        dest.writeFloat(quantity);
+        dest.writeString(measure);
+        dest.writeString(ingredient);
     }
 
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public Ingredient() {
+
     }
 
     public float getQuantity() {

@@ -7,6 +7,7 @@ package com.example.doelay.bakingapp.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -33,7 +34,10 @@ public class Recipe implements Parcelable{
     private String image;
 
     public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {
-        @Override
+
+        @SuppressWarnings({
+                "unchecked"
+        })
         public Recipe createFromParcel(Parcel source) {
             return new Recipe(source);
         }
@@ -45,12 +49,17 @@ public class Recipe implements Parcelable{
     };
 
     private Recipe (Parcel in) {
-        this.id = (Integer) in.readValue(getClass().getClassLoader());
-        this.name = (String) in.readValue(getClass().getClassLoader());
-        in.readList(this.ingredients, (getClass().getClassLoader()));
-        in.readList(this.steps, (com.example.doelay.bakingapp.model.Step.class.getClassLoader()));
-        this.servings = (Integer) in.readValue(getClass().getClassLoader());
-        this.image = (String) in.readValue(getClass().getClassLoader());
+        this.id = in.readInt();
+        this.name = in.readString();
+
+        ingredients = new ArrayList<>();
+        in.readTypedList(ingredients, Ingredient.CREATOR);
+
+        steps = new ArrayList<>();
+        in.readTypedList(steps, Step.CREATOR);
+
+        this.servings = in.readInt();
+        this.image = in.readString();
 
     }
 
@@ -61,12 +70,15 @@ public class Recipe implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(id);
-        dest.writeValue(name);
-        dest.writeList(ingredients);
-        dest.writeList(steps);
-        dest.writeValue(servings);
-        dest.writeValue(image);
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeTypedList(ingredients);
+        dest.writeTypedList(steps);
+        dest.writeInt(servings);
+        dest.writeString(image);
+    }
+    public Recipe() {
+
     }
 
     public int getId() {
