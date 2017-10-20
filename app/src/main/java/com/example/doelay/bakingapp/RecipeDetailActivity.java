@@ -3,11 +3,16 @@ package com.example.doelay.bakingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.LinearLayout;
 
+import com.example.doelay.bakingapp.model.Ingredient;
 import com.example.doelay.bakingapp.model.Recipe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -15,7 +20,7 @@ import butterknife.ButterKnife;
 /**
  * Created by doelay on 10/16/17.
  */
-// TODO: 10/17/17 Add recipe name on Appbar
+
 public class RecipeDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.one_pane)
@@ -24,14 +29,16 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private static final String TAG = RecipeDetailActivity.class.getSimpleName();
     private Recipe recipeSelected;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_detail_steps);
 
+        // TODO: 10/17/17 Add recipe name on Appbar
+
         ButterKnife.bind(this);
 
-        // TODO: 10/17/17 retrieve data
         Intent intent = getIntent();
         Bundle extra = intent.getExtras();
         if (extra == null) {
@@ -44,8 +51,15 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
 
         if(singlePaneLayout != null) {
-            // TODO: 10/17/17 load fragment related to one pane mode
-            
+            //pass the data to Ingredient Fragment
+            // TODO: 10/19/17 find a way to pass just ingredient list instead of the whole recipe
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("RecipeSelected",recipeSelected);
+
+            IngredientFragment mIngredientFragment = new IngredientFragment();
+            mIngredientFragment.setArguments(bundle);
+
+            getSupportFragmentManager().beginTransaction().add(R.id.ingredient_frag_container, mIngredientFragment).commit();
         }
     }
 }

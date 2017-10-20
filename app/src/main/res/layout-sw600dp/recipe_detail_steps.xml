@@ -19,7 +19,7 @@
             android:text="@string/ingredients"
             android:textSize="18sp"
             android:textStyle="bold"/>
-
+<!--try to load the fragments dynamically-->
         <fragment
             android:id="@+id/ingredient_fragment"
             android:name="com.example.doelay.bakingapp.IngredientFragment"
