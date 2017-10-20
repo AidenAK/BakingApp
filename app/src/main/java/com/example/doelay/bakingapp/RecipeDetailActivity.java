@@ -28,6 +28,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     private static final String TAG = RecipeDetailActivity.class.getSimpleName();
     private Recipe recipeSelected;
+    private ArrayList<Ingredient> ingredientList;
 
 
     @Override
@@ -52,9 +53,10 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         if(singlePaneLayout != null) {
             //pass the data to Ingredient Fragment
-            // TODO: 10/19/17 find a way to pass just ingredient list instead of the whole recipe
+            ingredientList = (ArrayList) recipeSelected.getIngredients();
+
             Bundle bundle = new Bundle();
-            bundle.putParcelable("RecipeSelected",recipeSelected);
+            bundle.putParcelableArrayList("RecipeSelected", ingredientList);
 
             IngredientFragment mIngredientFragment = new IngredientFragment();
             mIngredientFragment.setArguments(bundle);

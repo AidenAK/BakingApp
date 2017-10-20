@@ -32,17 +32,21 @@ public class IngredientFragment extends Fragment {
     private LinearLayoutManager layoutManager;
     private IngredientAdapter ingredientAdapter;
     private List<Ingredient> ingredientList;
-    private Recipe recipeSelected;
 
+
+    public static IngredientFragment newInstance(List<Ingredient> list){
+        // TODO: 10/20/17  return now fragment that list the ingredients
+
+        return null;
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if(getArguments() != null) {
 
-            recipeSelected = getArguments().getParcelable("RecipeSelected");
-            Log.d(TAG, "onCreate: "+ recipeSelected.getName());
-            ingredientList = recipeSelected.getIngredients();
+            ingredientList = getArguments().getParcelableArrayList("RecipeSelected");
+
         }
 
     }

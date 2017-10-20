@@ -20,16 +20,11 @@
 
     </FrameLayout>
 
-    <fragment
-        android:name="com.example.doelay.bakingapp.IngredientFragment"
-        android:id="@+id/ingredient_fragment"
+    <FrameLayout
+        android:id="@+id/step_frag_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
 
-    <!--<fragment-->
-        <!--android:name="com.example.doelay.bakingapp.StepFragment"-->
-        <!--android:id="@+id/step_fragment"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"/>-->
+    </FrameLayout>
 
 </LinearLayout>
