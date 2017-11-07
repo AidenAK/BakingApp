@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity
         Recipe recipeSelected = recipeList.get(position);
 
         Intent intent = new Intent(this, RecipeDetailActivity.class);
-        intent.putExtra("RecipeSelected", recipeSelected);
+        intent.putExtra("recipeSelected", recipeSelected);
 
         if(intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);

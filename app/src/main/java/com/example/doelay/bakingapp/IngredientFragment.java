@@ -3,6 +3,7 @@ package com.example.doelay.bakingapp;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,6 +15,7 @@ import com.example.doelay.bakingapp.adapter.IngredientAdapter;
 import com.example.doelay.bakingapp.model.Ingredient;
 import com.example.doelay.bakingapp.model.Recipe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -34,19 +36,22 @@ public class IngredientFragment extends Fragment {
     private List<Ingredient> ingredientList;
 
 
-    public static IngredientFragment newInstance(List<Ingredient> list){
-        // TODO: 10/20/17  return now fragment that list the ingredients
+    public static IngredientFragment newInstance(ArrayList<Ingredient> list){
 
-        return null;
+        IngredientFragment mFragment = new IngredientFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("ingredientList", list);
+        mFragment.setArguments(bundle);
+
+        return mFragment;
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        // TODO: 10/20/17 implement data restoration
         if(getArguments() != null) {
-
-            ingredientList = getArguments().getParcelableArrayList("RecipeSelected");
-
+            ingredientList = getArguments().getParcelableArrayList("ingredientList");
         }
 
     }
@@ -60,11 +65,11 @@ public class IngredientFragment extends Fragment {
 
         layoutManager = new LinearLayoutManager(getContext());
         ingredientRecyclerView.setLayoutManager(layoutManager);
+        ingredientRecyclerView.setHasFixedSize(true);
+//        ingredientRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
         ingredientAdapter = new IngredientAdapter();
         ingredientRecyclerView.setAdapter(ingredientAdapter);
-
-        ingredientRecyclerView.setHasFixedSize(true);
         ingredientAdapter.setIngredient(ingredientList);
 
         return view;
