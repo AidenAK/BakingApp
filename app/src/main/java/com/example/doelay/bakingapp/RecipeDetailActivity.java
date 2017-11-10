@@ -58,10 +58,10 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         if(singlePaneLayout != null) {
 
-            //setup ingredient fragment
-            ingredientList = (ArrayList) recipeSelected.getIngredients();
-            IngredientFragment mIngredientFragment = IngredientFragment.newInstance(ingredientList);
-            getSupportFragmentManager().beginTransaction().add(R.id.ingredient_frag_container, mIngredientFragment).commit();
+//            //setup ingredient fragment
+//            ingredientList = (ArrayList) recipeSelected.getIngredients();
+//            IngredientFragment mIngredientFragment = IngredientFragment.newInstance(ingredientList);
+//            getSupportFragmentManager().beginTransaction().add(R.id.ingredient_frag_container, mIngredientFragment).commit();
 
             //setup step fragment
             stepList = (ArrayList) recipeSelected.getSteps();
