@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.example.doelay.bakingapp.adapter.StepAdapter;
 import com.example.doelay.bakingapp.model.Ingredient;
 import com.example.doelay.bakingapp.model.Recipe;
 import com.example.doelay.bakingapp.model.Step;
@@ -24,7 +25,8 @@ import butterknife.ButterKnife;
  * Created by doelay on 10/16/17.
  */
 
-public class RecipeDetailActivity extends AppCompatActivity {
+public class RecipeDetailActivity extends AppCompatActivity
+        implements StepAdapter.OnStepSelectedListener {
 
     private static final String TAG = RecipeDetailActivity.class.getSimpleName();
     private Recipe recipeSelected;
@@ -51,14 +53,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
             }
         }
         if(recipeSelected != null) {
-            RecipeDetailFragment mRecipeDetailFragment = RecipeDetailFragment.newInstance(recipeSelected);
+            RecipeDetailFragment mRecipeDetailFragment = RecipeDetailFragment.newInstance(recipeSelected, this);
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, mRecipeDetailFragment).commit();
         }
 
     }
     public void onClickIngredients(View view) {
         // TODO: 11/13/17 check for dual pane layout
-        Log.d(TAG, "onClickIngredient: Show me the ingredients!");
         if(recipeSelected != null) {
             ingredientList = (ArrayList) recipeSelected.getIngredients();
             IngredientFragment ingredientFragment = IngredientFragment.newInstance(ingredientList);
@@ -69,5 +70,10 @@ public class RecipeDetailActivity extends AppCompatActivity {
             transaction.commit();
         }
 
+    }
+
+    @Override
+    public void onStepSelected(int position) {
+        Log.d(TAG, "onStepSelected: "+ position);
     }
 }

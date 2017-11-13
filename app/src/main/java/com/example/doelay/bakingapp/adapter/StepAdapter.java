@@ -29,6 +29,20 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepAdapterVie
 
     private static final String TAG = StepAdapter.class.getSimpleName();
     private List<Step> stepList;
+    private OnStepSelectedListener callback;
+
+    public interface OnStepSelectedListener{
+        void onStepSelected(int position);
+    }
+
+    public StepAdapter(Context mContext){
+        try {
+            callback = (OnStepSelectedListener) mContext;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(mContext.toString() + " must implement OnStepSelectedListener");
+        }
+
+    }
 
     @Override
     public StepAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -76,7 +90,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepAdapterVie
         @Override
         public void onClick(View mView) {
             int adapterPosition = getAdapterPosition();
-            Log.d(TAG, "onClick: "+ adapterPosition);
+            callback.onStepSelected(adapterPosition);
 
         }
 

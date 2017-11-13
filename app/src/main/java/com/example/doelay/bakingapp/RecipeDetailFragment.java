@@ -1,5 +1,6 @@
 package com.example.doelay.bakingapp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -27,8 +28,10 @@ public class RecipeDetailFragment extends Fragment {
 
     private Recipe recipeSelected;
     private ArrayList<Step> stepList;
+    private static Context context;
 
-    public static RecipeDetailFragment newInstance(Recipe recipeSelected){
+    public static RecipeDetailFragment newInstance(Recipe recipeSelected, Context mContext){
+        context = mContext;
 
         RecipeDetailFragment mRecipeDetailFragment = new RecipeDetailFragment();
 
@@ -48,7 +51,7 @@ public class RecipeDetailFragment extends Fragment {
 
         //setup step fragment
         stepList = (ArrayList) recipeSelected.getSteps();
-        StepFragment mStepFragment = StepFragment.newInstance(stepList);
+        StepFragment mStepFragment = StepFragment.newInstance(stepList, context);
         getChildFragmentManager().beginTransaction().add(R.id.step_frag_container, mStepFragment).commit();
     }
 

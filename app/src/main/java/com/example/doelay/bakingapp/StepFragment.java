@@ -1,5 +1,6 @@
 package com.example.doelay.bakingapp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -32,9 +33,10 @@ public class StepFragment extends Fragment {
     private List<Step> stepList;
     private LinearLayoutManager layoutManager;
     private StepAdapter stepAdapter;
+    private static Context context;
 
-    public static StepFragment newInstance(ArrayList<Step> list) {
-
+    public static StepFragment newInstance(ArrayList<Step> list, Context mContext) {
+        context = mContext;
         StepFragment mFragment = new StepFragment();
 
         Bundle bundle = new Bundle();
@@ -63,7 +65,7 @@ public class StepFragment extends Fragment {
         stepRecyclerView.setLayoutManager(layoutManager);
         stepRecyclerView.setHasFixedSize(true);
 
-        stepAdapter = new StepAdapter();
+        stepAdapter = new StepAdapter(context);
         stepRecyclerView.setAdapter(stepAdapter);
         stepAdapter.setStep(stepList);
 
