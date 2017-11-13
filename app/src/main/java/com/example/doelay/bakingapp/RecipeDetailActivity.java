@@ -60,7 +60,7 @@ public class RecipeDetailActivity extends AppCompatActivity
     }
     public void onClickIngredients(View view) {
         // TODO: 11/13/17 check for dual pane layout
-        if(recipeSelected != null) {
+
             ingredientList = (ArrayList) recipeSelected.getIngredients();
             IngredientFragment ingredientFragment = IngredientFragment.newInstance(ingredientList);
 
@@ -68,12 +68,20 @@ public class RecipeDetailActivity extends AppCompatActivity
             transaction.replace(R.id.fragment_container, ingredientFragment);
             transaction.addToBackStack(null);
             transaction.commit();
-        }
+
 
     }
 
     @Override
     public void onStepSelected(int position) {
         Log.d(TAG, "onStepSelected: "+ position);
+        Step step = recipeSelected.getSteps().get(position);
+        DetailStepFragment detailStepFragment = DetailStepFragment.newInstance(step);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, detailStepFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
     }
 }
