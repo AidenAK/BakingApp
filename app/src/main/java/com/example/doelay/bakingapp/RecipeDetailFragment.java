@@ -23,9 +23,6 @@ import butterknife.ButterKnife;
 
 public class RecipeDetailFragment extends Fragment {
 
-    @BindView(R.id.one_pane)
-    LinearLayout singlePaneLayout;
-
     private Recipe recipeSelected;
     private ArrayList<Step> stepList;
     private static Context context;
@@ -62,13 +59,5 @@ public class RecipeDetailFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.recipe_detail_steps, container, false);
         return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-
-
     }
 }

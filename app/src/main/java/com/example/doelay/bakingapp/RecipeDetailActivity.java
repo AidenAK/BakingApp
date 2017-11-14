@@ -28,6 +28,7 @@ import butterknife.ButterKnife;
 public class RecipeDetailActivity extends AppCompatActivity
         implements StepAdapter.OnStepSelectedListener {
 
+
     private static final String TAG = RecipeDetailActivity.class.getSimpleName();
     private Recipe recipeSelected;
     private ArrayList<Ingredient> ingredientList;
@@ -52,9 +53,15 @@ public class RecipeDetailActivity extends AppCompatActivity
                 Log.d(TAG, "onCreate: Recipe name is " + recipeSelected.getName());
             }
         }
+
         if(recipeSelected != null) {
             RecipeDetailFragment mRecipeDetailFragment = RecipeDetailFragment.newInstance(recipeSelected, this);
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, mRecipeDetailFragment).commit();
+            if(findViewById(R.id.one_pane) != null) {
+                getSupportFragmentManager().beginTransaction().add(R.id.one_pane, mRecipeDetailFragment).commit();
+            } else {
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_master, mRecipeDetailFragment).commit();
+
+            }
         }
 
     }
@@ -63,11 +70,17 @@ public class RecipeDetailActivity extends AppCompatActivity
 
             ingredientList = (ArrayList) recipeSelected.getIngredients();
             IngredientFragment ingredientFragment = IngredientFragment.newInstance(ingredientList);
-
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, ingredientFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
+
+            if(findViewById(R.id.one_pane) != null) {
+                transaction.replace(R.id.one_pane, ingredientFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            } else {
+                transaction.replace(R.id.fragment_container_detail, ingredientFragment);
+                transaction.commit();
+            }
+
 
 
     }
@@ -75,13 +88,21 @@ public class RecipeDetailActivity extends AppCompatActivity
     @Override
     public void onStepSelected(int position) {
         Log.d(TAG, "onStepSelected: "+ position);
+
         Step step = recipeSelected.getSteps().get(position);
         DetailStepFragment detailStepFragment = DetailStepFragment.newInstance(step);
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, detailStepFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+
+        if(findViewById(R.id.one_pane) != null) {
+            transaction.replace(R.id.one_pane, detailStepFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        } else {
+            transaction.replace(R.id.fragment_container_detail, detailStepFragment);
+            transaction.commit();
+        }
+
+
 
     }
 }
