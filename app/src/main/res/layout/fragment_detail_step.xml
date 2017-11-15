@@ -6,12 +6,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+        android:id="@+id/video_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/horizontal_Line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+    </com.google.android.exoplayer2.ui.SimpleExoPlayerView>
+
     <android.support.constraint.Guideline
-        android:id="@+id/guideline"
+        android:id="@+id/horizontal_Line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="227dp"/>
+        app:layout_constraintGuide_begin="255dp"/>
 
     <TextView
         android:id="@+id/tv_description"
@@ -20,9 +36,10 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.026"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/horizontal_Line"
         tools:text="Description"/>
 </android.support.constraint.ConstraintLayout>

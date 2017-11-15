@@ -1,8 +1,10 @@
 package com.example.doelay.bakingapp;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -30,8 +32,11 @@ public class RecipeDetailActivity extends AppCompatActivity
 
 
     private static final String TAG = RecipeDetailActivity.class.getSimpleName();
+    private static final String RECIPE_SELECTED = "recipe_selected";
+    private static final String RECIPE_DETAIL_FRAGMENT = "recipe_detail_fragment";
     private Recipe recipeSelected;
     private ArrayList<Ingredient> ingredientList;
+    private RecipeDetailFragment mRecipeDetailFragment;
 
 
     @Override
@@ -39,50 +44,57 @@ public class RecipeDetailActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_container);
 
-        // TODO: 10/17/17 Add recipe name on Appbar
-
-        ButterKnife.bind(this);
-
-        Intent intent = getIntent();
-        Bundle extra = intent.getExtras();
-        if (extra == null) {
-            return;
-        } else {
-            if (extra.containsKey("recipeSelected")) {
-                recipeSelected = intent.getParcelableExtra("recipeSelected");
-                Log.d(TAG, "onCreate: Recipe name is " + recipeSelected.getName());
-            }
-        }
-
-        if(recipeSelected != null) {
-            RecipeDetailFragment mRecipeDetailFragment = RecipeDetailFragment.newInstance(recipeSelected, this);
-            if(findViewById(R.id.one_pane) != null) {
-                getSupportFragmentManager().beginTransaction().add(R.id.one_pane, mRecipeDetailFragment).commit();
+        if(savedInstanceState == null) {
+            Intent intent = getIntent();
+            Bundle extra = intent.getExtras();
+            if (extra == null) {
+                return;
             } else {
-                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_master, mRecipeDetailFragment).commit();
+                if (extra.containsKey("recipeSelected")) {
+                    recipeSelected = intent.getParcelableExtra("recipeSelected");
+                    Log.d(TAG, "onCreate: Recipe name is " + recipeSelected.getName());
 
+                    mRecipeDetailFragment = RecipeDetailFragment.newInstance(recipeSelected, this);
+                }
             }
+        } else {
+            recipeSelected = savedInstanceState.getParcelable(RECIPE_SELECTED);
+            mRecipeDetailFragment = (RecipeDetailFragment) getSupportFragmentManager().findFragmentByTag(RECIPE_DETAIL_FRAGMENT);
+        }
+        //set Appbar label
+        getSupportActionBar().setTitle(recipeSelected.getName());
+
+        if(findViewById(R.id.one_pane) != null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.one_pane, mRecipeDetailFragment, RECIPE_DETAIL_FRAGMENT).commit();
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_master, mRecipeDetailFragment).commit();
+
         }
 
     }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(RECIPE_SELECTED, recipeSelected);
+        super.onSaveInstanceState(outState);
+    }
+
+
     public void onClickIngredients(View view) {
-        // TODO: 11/13/17 check for dual pane layout
 
-            ingredientList = (ArrayList) recipeSelected.getIngredients();
-            IngredientFragment ingredientFragment = IngredientFragment.newInstance(ingredientList);
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        ingredientList = (ArrayList) recipeSelected.getIngredients();
+        IngredientFragment ingredientFragment = IngredientFragment.newInstance(ingredientList);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-            if(findViewById(R.id.one_pane) != null) {
-                transaction.replace(R.id.one_pane, ingredientFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            } else {
-                transaction.replace(R.id.fragment_container_detail, ingredientFragment);
-                transaction.commit();
-            }
-
-
-
+        if(findViewById(R.id.one_pane) != null) {
+            transaction.replace(R.id.one_pane, ingredientFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        } else {
+            transaction.replace(R.id.fragment_container_detail, ingredientFragment);
+            transaction.commit();
+        }
     }
 
     @Override

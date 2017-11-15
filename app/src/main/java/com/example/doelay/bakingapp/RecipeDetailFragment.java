@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class RecipeDetailFragment extends Fragment {
     private Recipe recipeSelected;
     private ArrayList<Step> stepList;
     private static Context context;
+
 
     public static RecipeDetailFragment newInstance(Recipe recipeSelected, Context mContext){
         context = mContext;
