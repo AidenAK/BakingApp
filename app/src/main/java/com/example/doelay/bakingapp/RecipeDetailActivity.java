@@ -26,6 +26,9 @@ import butterknife.ButterKnife;
 /**
  * Created by doelay on 10/16/17.
  */
+// TODO: 11/16/17 need to implement back button for RecipeDetailactivity and each fragment
+// TODO: 11/16/17 need to implement landscape layout for phone
+
 
 public class RecipeDetailActivity extends AppCompatActivity
         implements StepAdapter.OnStepSelectedListener {
@@ -62,7 +65,8 @@ public class RecipeDetailActivity extends AppCompatActivity
 
         //set Appbar label
         getSupportActionBar().setTitle(recipeSelected.getName());
-        //load fragment
+        // load fragment
+        // TODO: 11/16/17 need to find out which fragment is in view
         mRecipeDetailFragment = RecipeDetailFragment.newInstance(recipeSelected, this);
         if(findViewById(R.id.one_pane) != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.one_pane, mRecipeDetailFragment, RECIPE_DETAIL_FRAGMENT).commit();
@@ -88,6 +92,7 @@ public class RecipeDetailActivity extends AppCompatActivity
     protected void onSaveInstanceState(Bundle outState) {
         Log.d(TAG, "onSaveInstanceState: called!");
         outState.putParcelable(RECIPE_SELECTED, recipeSelected);
+
         super.onSaveInstanceState(outState);
     }
 
@@ -122,7 +127,7 @@ public class RecipeDetailActivity extends AppCompatActivity
     @Override
     public void onStepSelected(int position) {
         Log.d(TAG, "onStepSelected: "+ position);
-
+        // TODO: 11/16/17 landscape layout for tablet must be different from phone
         Step step = recipeSelected.getSteps().get(position);
         DetailStepFragment detailStepFragment = DetailStepFragment.newInstance(step);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
