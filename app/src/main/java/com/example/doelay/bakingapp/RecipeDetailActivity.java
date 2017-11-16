@@ -43,6 +43,7 @@ public class RecipeDetailActivity extends AppCompatActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_container);
+        Log.d(TAG, "onCreate: called!");
 
         if(savedInstanceState == null) {
             Intent intent = getIntent();
@@ -53,33 +54,54 @@ public class RecipeDetailActivity extends AppCompatActivity
                 if (extra.containsKey("recipeSelected")) {
                     recipeSelected = intent.getParcelableExtra("recipeSelected");
                     Log.d(TAG, "onCreate: Recipe name is " + recipeSelected.getName());
-
-                    mRecipeDetailFragment = RecipeDetailFragment.newInstance(recipeSelected, this);
                 }
             }
         } else {
             recipeSelected = savedInstanceState.getParcelable(RECIPE_SELECTED);
-            mRecipeDetailFragment = (RecipeDetailFragment) getSupportFragmentManager().findFragmentByTag(RECIPE_DETAIL_FRAGMENT);
         }
+
         //set Appbar label
         getSupportActionBar().setTitle(recipeSelected.getName());
-
+        //load fragment
+        mRecipeDetailFragment = RecipeDetailFragment.newInstance(recipeSelected, this);
         if(findViewById(R.id.one_pane) != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.one_pane, mRecipeDetailFragment, RECIPE_DETAIL_FRAGMENT).commit();
         } else {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_master, mRecipeDetailFragment).commit();
-
         }
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: called!");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: called!");
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        Log.d(TAG, "onSaveInstanceState: called!");
         outState.putParcelable(RECIPE_SELECTED, recipeSelected);
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: called!");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: called!");
+    }
 
     public void onClickIngredients(View view) {
 
