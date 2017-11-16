@@ -4,13 +4,10 @@ package com.example.doelay.bakingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.example.doelay.bakingapp.adapter.StepAdapter;
 import com.example.doelay.bakingapp.model.Ingredient;
@@ -18,10 +15,6 @@ import com.example.doelay.bakingapp.model.Recipe;
 import com.example.doelay.bakingapp.model.Step;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by doelay on 10/16/17.
@@ -71,7 +64,7 @@ public class RecipeDetailActivity extends AppCompatActivity
         if(findViewById(R.id.one_pane) != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.one_pane, mRecipeDetailFragment, RECIPE_DETAIL_FRAGMENT).commit();
         } else {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_master, mRecipeDetailFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.two_pane_master, mRecipeDetailFragment).commit();
         }
 
     }
@@ -119,7 +112,7 @@ public class RecipeDetailActivity extends AppCompatActivity
             transaction.addToBackStack(null);
             transaction.commit();
         } else {
-            transaction.replace(R.id.fragment_container_detail, ingredientFragment);
+            transaction.replace(R.id.two_pane_detail, ingredientFragment);
             transaction.commit();
         }
     }
@@ -137,7 +130,7 @@ public class RecipeDetailActivity extends AppCompatActivity
             transaction.addToBackStack(null);
             transaction.commit();
         } else {
-            transaction.replace(R.id.fragment_container_detail, detailStepFragment);
+            transaction.replace(R.id.two_pane_detail, detailStepFragment);
             transaction.commit();
         }
 

@@ -6,7 +6,7 @@
               android:orientation="horizontal">
 
     <LinearLayout
-        android:id="@+id/fragment_container_master"
+        android:id="@+id/two_pane_master"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
@@ -15,7 +15,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/fragment_container_detail"
+        android:id="@+id/two_pane_detail"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="3"
