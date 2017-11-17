@@ -31,9 +31,10 @@ public class IngredientFragment extends Fragment {
     RecyclerView ingredientRecyclerView;
 
     private static final String TAG = Ingredient.class.getSimpleName();
+    private static final String INGREDIENT_LIST = "ingredient_list";
     private LinearLayoutManager layoutManager;
     private IngredientAdapter ingredientAdapter;
-    private List<Ingredient> ingredientList;
+    private ArrayList<Ingredient> ingredientList;
 
 
     public static IngredientFragment newInstance(ArrayList<Ingredient> list){
@@ -49,11 +50,14 @@ public class IngredientFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: 10/20/17 implement data restoration
-        if(getArguments() != null) {
-            ingredientList = getArguments().getParcelableArrayList("ingredientList");
-        }
 
+        if(savedInstanceState != null) {
+            ingredientList = savedInstanceState.getParcelableArrayList(INGREDIENT_LIST);
+        } else {
+            if(getArguments() != null) {
+                ingredientList = getArguments().getParcelableArrayList("ingredientList");
+            }
+        }
     }
 
     @Nullable
@@ -73,5 +77,11 @@ public class IngredientFragment extends Fragment {
         ingredientAdapter.setIngredient(ingredientList);
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(INGREDIENT_LIST, ingredientList);
     }
 }

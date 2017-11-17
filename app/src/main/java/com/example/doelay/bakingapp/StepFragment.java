@@ -30,7 +30,8 @@ public class StepFragment extends Fragment {
     RecyclerView stepRecyclerView;
 
     private static final String TAG = StepFragment.class.getSimpleName();
-    private List<Step> stepList;
+    private static final String STEP_LIST = "step_list";
+    private ArrayList<Step> stepList;
     private LinearLayoutManager layoutManager;
     private StepAdapter stepAdapter;
     private static Context context;
@@ -49,8 +50,13 @@ public class StepFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getArguments() != null) {
-            stepList = getArguments().getParcelableArrayList("stepList");
+        if(savedInstanceState != null) {
+            stepList = savedInstanceState.getParcelableArrayList(STEP_LIST);
+        } else {
+            if(getArguments() != null) {
+                stepList = getArguments().getParcelableArrayList("stepList");
+            }
+
         }
     }
 
@@ -70,5 +76,12 @@ public class StepFragment extends Fragment {
         stepAdapter.setStep(stepList);
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        // TODO: 11/17/17 need to save recycler view state
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(STEP_LIST, stepList);
     }
 }

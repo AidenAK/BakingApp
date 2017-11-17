@@ -50,17 +50,21 @@ public class RecipeDetailActivity extends AppCompatActivity
                 if (extra.containsKey("recipeSelected")) {
                     recipeSelected = intent.getParcelableExtra("recipeSelected");
                     Log.d(TAG, "onCreate: Recipe name is " + recipeSelected.getName());
+
+                    mRecipeDetailFragment = RecipeDetailFragment.newInstance(recipeSelected, this);
+
                 }
             }
         } else {
             recipeSelected = savedInstanceState.getParcelable(RECIPE_SELECTED);
+
+            if(getSupportFragmentManager().findFragmentByTag(RECIPE_DETAIL_FRAGMENT) != null) {
+                mRecipeDetailFragment = (RecipeDetailFragment) getSupportFragmentManager().findFragmentByTag(RECIPE_DETAIL_FRAGMENT);
+            }
         }
 
         //set Appbar label
         getSupportActionBar().setTitle(recipeSelected.getName());
-        // load fragment
-        // TODO: 11/16/17 need to find out which fragment is in view
-        mRecipeDetailFragment = RecipeDetailFragment.newInstance(recipeSelected, this);
         if(findViewById(R.id.one_pane) != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.one_pane, mRecipeDetailFragment, RECIPE_DETAIL_FRAGMENT).commit();
         } else {
@@ -84,9 +88,8 @@ public class RecipeDetailActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         Log.d(TAG, "onSaveInstanceState: called!");
-        outState.putParcelable(RECIPE_SELECTED, recipeSelected);
-
         super.onSaveInstanceState(outState);
+        outState.putParcelable(RECIPE_SELECTED, recipeSelected);
     }
 
     @Override
@@ -133,8 +136,5 @@ public class RecipeDetailActivity extends AppCompatActivity
             transaction.replace(R.id.two_pane_detail, detailStepFragment);
             transaction.commit();
         }
-
-
-
     }
 }
