@@ -17,7 +17,7 @@ import com.example.doelay.bakingapp.model.Step;
 import java.util.ArrayList;
 
 /**
- * Created by doelay on 10/16/17.
+ * This class is responsible for hosting the fragments.
  */
 // TODO: 11/16/17 need to implement back button for RecipeDetailactivity and each fragment
 // TODO: 11/16/17 need to implement landscape layout for phone
@@ -64,7 +64,10 @@ public class RecipeDetailActivity extends AppCompatActivity
             }
         }
 
-        mRecipeDetailFragment = RecipeDetailFragment.newInstance(recipeSelected, this);
+        //create a new fragment that will display ingredients and steps
+        mRecipeDetailFragment = RecipeDetailFragment.newInstance(recipeSelected);
+        //set callback for StepAdapter
+        StepAdapter.setCallback(this);
         //set Appbar label
         getSupportActionBar().setTitle(recipeSelected.getName());
         //check for tablet or phone

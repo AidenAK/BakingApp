@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by doelay on 11/6/17.
+ * This class is responsible for displaying recipe steps.
  */
 
 public class StepFragment extends Fragment {
@@ -34,10 +34,9 @@ public class StepFragment extends Fragment {
     private ArrayList<Step> stepList;
     private LinearLayoutManager layoutManager;
     private StepAdapter stepAdapter;
-    private static Context context;
 
-    public static StepFragment newInstance(ArrayList<Step> list, Context mContext) {
-        context = mContext;
+    public static StepFragment newInstance(ArrayList<Step> list) {
+
         StepFragment mFragment = new StepFragment();
 
         Bundle bundle = new Bundle();
@@ -71,7 +70,7 @@ public class StepFragment extends Fragment {
         stepRecyclerView.setLayoutManager(layoutManager);
         stepRecyclerView.setHasFixedSize(true);
 
-        stepAdapter = new StepAdapter(context);
+        stepAdapter = new StepAdapter();
         stepRecyclerView.setAdapter(stepAdapter);
         stepAdapter.setStep(stepList);
 
@@ -84,4 +83,6 @@ public class StepFragment extends Fragment {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(STEP_LIST, stepList);
     }
+
+
 }

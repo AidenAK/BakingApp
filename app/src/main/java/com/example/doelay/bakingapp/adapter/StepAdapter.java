@@ -29,18 +29,21 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepAdapterVie
 
     private static final String TAG = StepAdapter.class.getSimpleName();
     private List<Step> stepList;
-    private OnStepSelectedListener callback;
+    private static OnStepSelectedListener callback;
 
     public interface OnStepSelectedListener{
         void onStepSelected(int position);
     }
 
-    public StepAdapter(Context mContext){
+    public static void setCallback(Context mContext) {
         try {
             callback = (OnStepSelectedListener) mContext;
         } catch (ClassCastException e) {
             throw new ClassCastException(mContext.toString() + " must implement OnStepSelectedListener");
         }
+    }
+
+    public StepAdapter(){
 
     }
 

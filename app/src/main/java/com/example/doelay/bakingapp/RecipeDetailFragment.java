@@ -14,7 +14,7 @@ import com.example.doelay.bakingapp.model.Step;
 import java.util.ArrayList;
 
 /**
- * Created by doelay on 11/13/17.
+ * This class is responsible for displaying the ingredients and recipe steps
  */
 
 public class RecipeDetailFragment extends Fragment {
@@ -22,11 +22,10 @@ public class RecipeDetailFragment extends Fragment {
     private static final String RECIPE_SELECTED = "recipe_selected";
     private Recipe recipeSelected;
     private ArrayList<Step> stepList;
-    private static Context context;
 
 
-    public static RecipeDetailFragment newInstance(Recipe recipeSelected, Context mContext){
-        context = mContext;
+
+    public static RecipeDetailFragment newInstance(Recipe recipeSelected){
 
         RecipeDetailFragment mRecipeDetailFragment = new RecipeDetailFragment();
 
@@ -51,7 +50,7 @@ public class RecipeDetailFragment extends Fragment {
 
         //setup step fragment
         stepList = (ArrayList) recipeSelected.getSteps();
-        StepFragment mStepFragment = StepFragment.newInstance(stepList, context);
+        StepFragment mStepFragment = StepFragment.newInstance(stepList);
         getChildFragmentManager().beginTransaction().add(R.id.step_frag_container, mStepFragment).commit();
     }
 
