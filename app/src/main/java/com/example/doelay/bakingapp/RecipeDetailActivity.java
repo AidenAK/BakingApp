@@ -51,20 +51,23 @@ public class RecipeDetailActivity extends AppCompatActivity
                     recipeSelected = intent.getParcelableExtra("recipeSelected");
                     Log.d(TAG, "onCreate: Recipe name is " + recipeSelected.getName());
 
-                    mRecipeDetailFragment = RecipeDetailFragment.newInstance(recipeSelected, this);
-
                 }
             }
         } else {
             recipeSelected = savedInstanceState.getParcelable(RECIPE_SELECTED);
 
+            //remove the old fragment with old context
             if(getSupportFragmentManager().findFragmentByTag(RECIPE_DETAIL_FRAGMENT) != null) {
-                mRecipeDetailFragment = (RecipeDetailFragment) getSupportFragmentManager().findFragmentByTag(RECIPE_DETAIL_FRAGMENT);
+                RecipeDetailFragment oldFragment = (RecipeDetailFragment) getSupportFragmentManager().findFragmentByTag(RECIPE_DETAIL_FRAGMENT);
+                getSupportFragmentManager().beginTransaction().remove(oldFragment).commit();
+
             }
         }
 
+        mRecipeDetailFragment = RecipeDetailFragment.newInstance(recipeSelected, this);
         //set Appbar label
         getSupportActionBar().setTitle(recipeSelected.getName());
+        //check for tablet or phone
         if(findViewById(R.id.one_pane) != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.one_pane, mRecipeDetailFragment, RECIPE_DETAIL_FRAGMENT).commit();
         } else {
