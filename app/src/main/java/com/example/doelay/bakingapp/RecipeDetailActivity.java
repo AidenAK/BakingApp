@@ -24,15 +24,14 @@ import java.util.ArrayList;
 
 
 public class RecipeDetailActivity extends AppCompatActivity
-        implements StepAdapter.OnStepSelectedListener {
+        {
 
 
     private static final String TAG = RecipeDetailActivity.class.getSimpleName();
     private static final String RECIPE_SELECTED = "recipe_selected";
-    private static final String RECIPE_DETAIL_FRAGMENT = "recipe_detail_fragment";
+
     private Recipe recipeSelected;
-    private ArrayList<Ingredient> ingredientList;
-    private RecipeDetailFragment mRecipeDetailFragment;
+
 
 
     @Override
@@ -55,29 +54,12 @@ public class RecipeDetailActivity extends AppCompatActivity
             }
         } else {
             recipeSelected = savedInstanceState.getParcelable(RECIPE_SELECTED);
-
-            //remove the old fragment with old context
-            if(getSupportFragmentManager().findFragmentByTag(RECIPE_DETAIL_FRAGMENT) != null) {
-                RecipeDetailFragment oldFragment = (RecipeDetailFragment) getSupportFragmentManager().findFragmentByTag(RECIPE_DETAIL_FRAGMENT);
-                getSupportFragmentManager().beginTransaction().remove(oldFragment).commit();
-
             }
         }
 
-        //create a new fragment that will display ingredients and steps
-        mRecipeDetailFragment = RecipeDetailFragment.newInstance(recipeSelected);
-        //set callback for StepAdapter
-        StepAdapter.setCallback(this);
-        //set Appbar label
-        getSupportActionBar().setTitle(recipeSelected.getName());
-        //check for tablet or phone
-        if(findViewById(R.id.one_pane) != null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.one_pane, mRecipeDetailFragment, RECIPE_DETAIL_FRAGMENT).commit();
-        } else {
-            getSupportFragmentManager().beginTransaction().replace(R.id.two_pane_master, mRecipeDetailFragment).commit();
-        }
 
-    }
+
+
 
     @Override
     protected void onResume() {
@@ -110,37 +92,5 @@ public class RecipeDetailActivity extends AppCompatActivity
         Log.d(TAG, "onDestroy: called!");
     }
 
-    public void onClickIngredients(View view) {
 
-        ingredientList = (ArrayList) recipeSelected.getIngredients();
-        IngredientFragment ingredientFragment = IngredientFragment.newInstance(ingredientList);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        if(findViewById(R.id.one_pane) != null) {
-            transaction.replace(R.id.one_pane, ingredientFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        } else {
-            transaction.replace(R.id.two_pane_detail, ingredientFragment);
-            transaction.commit();
-        }
-    }
-
-    @Override
-    public void onStepSelected(int position) {
-        Log.d(TAG, "onStepSelected: "+ position);
-        // TODO: 11/16/17 landscape layout for tablet must be different from phone
-        Step step = recipeSelected.getSteps().get(position);
-        DetailStepFragment detailStepFragment = DetailStepFragment.newInstance(step);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        if(findViewById(R.id.one_pane) != null) {
-            transaction.replace(R.id.one_pane, detailStepFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        } else {
-            transaction.replace(R.id.two_pane_detail, detailStepFragment);
-            transaction.commit();
-        }
-    }
 }
