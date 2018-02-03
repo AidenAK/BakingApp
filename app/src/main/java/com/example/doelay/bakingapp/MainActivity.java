@@ -130,7 +130,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onRecipeSelected(int position) {
 
-        // TODO: 10/17/17 start RecipeDetailActivity and pass the data
         Log.d(TAG, "onRecipeSelected: "+ recipeList.get(position).getName());
 
         Recipe recipeSelected = recipeList.get(position);

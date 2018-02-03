@@ -2,6 +2,7 @@ package com.example.doelay.bakingapp.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import butterknife.ButterKnife;
  */
 
 public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapter.RecipeDetailAdapterViewHolder> {
+
+    private static final String TAG = RecipeDetailAdapter.class.getSimpleName();
 
     private static final int VIEW_TYPE_INGREDIENT = 0;
     private static final int VIEW_TYPE_STEP = 1;
@@ -66,6 +69,7 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
 
     @Override
     public void onBindViewHolder(RecipeDetailAdapterViewHolder holder, int position) {
+        Log.d(TAG, "onBindViewHolder: called");
         holder.bind(position);
     }
 
@@ -81,10 +85,14 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
 
     @Override
     public int getItemViewType(int position) {
-        return super.getItemViewType(position);
+        if (position == VIEW_TYPE_INGREDIENT){
+            return VIEW_TYPE_INGREDIENT;
+        } else {
+            return VIEW_TYPE_STEP;
+        }
     }
 
-    public void setRecipeSelected(Recipe recipe){
+    public void setRecipe(Recipe recipe){
         recipeSelected = recipe;
         stepList = (ArrayList) recipeSelected.getSteps();
         notifyDataSetChanged();

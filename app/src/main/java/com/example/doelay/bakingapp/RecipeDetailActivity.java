@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.example.doelay.bakingapp.adapter.RecipeDetailAdapter;
 import com.example.doelay.bakingapp.adapter.StepAdapter;
 import com.example.doelay.bakingapp.model.Ingredient;
 import com.example.doelay.bakingapp.model.Recipe;
@@ -24,13 +25,14 @@ import java.util.ArrayList;
 
 
 public class RecipeDetailActivity extends AppCompatActivity
-        {
+        implements RecipeDetailAdapter.RecipeDetailOnClickListener{
 
 
     private static final String TAG = RecipeDetailActivity.class.getSimpleName();
     private static final String RECIPE_SELECTED = "recipe_selected";
 
     private Recipe recipeSelected;
+    private RecipeDetailFragment mRecipeDetailFragment;
 
 
 
@@ -55,11 +57,17 @@ public class RecipeDetailActivity extends AppCompatActivity
         } else {
             recipeSelected = savedInstanceState.getParcelable(RECIPE_SELECTED);
             }
-        }
 
 
+        getSupportActionBar().setTitle(recipeSelected.getName());
+        mRecipeDetailFragment = RecipeDetailFragment.newInstance(recipeSelected, this);
+        getSupportFragmentManager().beginTransaction().add(R.id.one_pane, mRecipeDetailFragment).commit();
+    }
 
-
+    @Override
+    public void recipeDetailOnClickListener(int position) {
+        // TODO: 2/2/18  
+    }
 
     @Override
     protected void onResume() {
