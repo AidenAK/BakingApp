@@ -18,8 +18,9 @@
             android:id="@+id/tv_short_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Ingredients"
             android:textSize="18sp"
-            tools:text="Ingredients"/>
+            />
 
     </android.support.constraint.ConstraintLayout>
 

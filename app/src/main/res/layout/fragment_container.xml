@@ -3,12 +3,5 @@
              android:id="@+id/one_pane"
              android:layout_width="match_parent"
              android:layout_height="match_parent">
-    <!--<fragment-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:id="@+id/recipe_detail_fragment"-->
-        <!--android:name="com.example.doelay.bakingapp.RecipeDetailFragment">-->
-
-    <!--</fragment>-->
 
 </FrameLayout>
