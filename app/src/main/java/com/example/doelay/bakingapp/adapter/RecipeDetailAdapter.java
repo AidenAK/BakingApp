@@ -76,7 +76,7 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
     @Override
     public int getItemCount() {
         if (stepList.size() != 0){
-            return stepList.size() + 1;
+            return stepList.size() + 1;//total number of viewHolder =  total number steps + 1 for ingredient
         } else {
             return 0;
         }
@@ -112,7 +112,12 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            callback.recipeDetailOnClickListener(adapterPosition);
+
+            if(adapterPosition == 0) {
+                callback.recipeDetailOnClickListener(adapterPosition);
+            } else {
+                callback.recipeDetailOnClickListener(adapterPosition-1);//make adjustment for stepList index
+            }
         }
     }
 

@@ -4,18 +4,15 @@ package com.example.doelay.bakingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 
 import com.example.doelay.bakingapp.adapter.RecipeDetailAdapter;
-import com.example.doelay.bakingapp.adapter.StepAdapter;
-import com.example.doelay.bakingapp.model.Ingredient;
 import com.example.doelay.bakingapp.model.Recipe;
 import com.example.doelay.bakingapp.model.Step;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class is responsible for hosting the fragments.
@@ -33,13 +30,14 @@ public class RecipeDetailActivity extends AppCompatActivity
 
     private Recipe recipeSelected;
     private RecipeDetailFragment mRecipeDetailFragment;
+    private DetailStepFragment mDetailStepFragment;
 
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_container);
+        setContentView(R.layout.activity_recipe_detail);
         Log.d(TAG, "onCreate: called!");
 
         if(savedInstanceState == null) {
@@ -61,12 +59,37 @@ public class RecipeDetailActivity extends AppCompatActivity
 
         getSupportActionBar().setTitle(recipeSelected.getName());
         mRecipeDetailFragment = RecipeDetailFragment.newInstance(recipeSelected, this);
-        getSupportFragmentManager().beginTransaction().add(R.id.one_pane, mRecipeDetailFragment).commit();
+        //check whether if tablet mode or not
+        if (findViewById(R.id.two_pane) != null) {
+            getSupportFragmentManager().beginTransaction().add(R.id.two_pane_master, mRecipeDetailFragment).commit();
+        } else {
+            getSupportFragmentManager().beginTransaction().add(R.id.one_pane, mRecipeDetailFragment).commit();
+        }
     }
 
     @Override
     public void recipeDetailOnClickListener(int position) {
         Log.d(TAG, "recipeDetailOnClickListener: adapter position is " + position);
+        //load DetailStepFragment if it is in tablet mode or start a DetailStepActivity
+        // TODO: 2/6/18 need to check the position for "0" or not
+        List<Step> stepList = recipeSelected.getSteps();
+        Step step = stepList.get(position);
+
+        if(findViewById(R.id.two_pane) != null) {
+            //in tablet mode
+            mDetailStepFragment = DetailStepFragment.newInstance(step);
+            getSupportFragmentManager().beginTransaction().replace(R.id.two_pane_detail, mDetailStepFragment).commit();
+        } else {
+            //in phone mode
+            Intent intent = new Intent(this, DetailStepActivity.class);
+            intent.putExtra("step", step);
+
+            if(intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            } else {
+                Log.d(TAG, "recipeDetailOnClickListener: no activity to handle the intent");
+            }
+        }
     }
 
     @Override
