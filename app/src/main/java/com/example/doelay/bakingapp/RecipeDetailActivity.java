@@ -66,7 +66,7 @@ public class RecipeDetailActivity extends AppCompatActivity
 
     @Override
     public void recipeDetailOnClickListener(int position) {
-        // TODO: 2/2/18  
+        Log.d(TAG, "recipeDetailOnClickListener: adapter position is " + position);
     }
 
     @Override

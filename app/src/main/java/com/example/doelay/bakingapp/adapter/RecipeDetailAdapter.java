@@ -98,15 +98,22 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
         notifyDataSetChanged();
     }
 
-    public abstract class RecipeDetailAdapterViewHolder extends RecyclerView.ViewHolder {
+    public abstract class RecipeDetailAdapterViewHolder extends RecyclerView.ViewHolder
+                                                        implements View.OnClickListener{
 
         // TODO: 2/2/18 add OnClickListener
         public abstract void bind(int position);
 
         public RecipeDetailAdapterViewHolder(View view) {
             super(view);
+            view.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View v) {
+            int adapterPosition = getAdapterPosition();
+            callback.recipeDetailOnClickListener(adapterPosition);
+        }
     }
 
     /**
