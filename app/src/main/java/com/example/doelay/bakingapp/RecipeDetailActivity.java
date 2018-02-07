@@ -18,8 +18,7 @@ import java.util.List;
 /**
  * This class is responsible for hosting the fragments.
  */
-// TODO: 11/16/17 need to implement back button for RecipeDetailactivity and each fragment
-// TODO: 11/16/17 need to implement landscape layout for phone
+
 
 
 public class RecipeDetailActivity extends AppCompatActivity
@@ -62,7 +61,7 @@ public class RecipeDetailActivity extends AppCompatActivity
         getSupportActionBar().setTitle(recipeSelected.getName());
         mRecipeDetailFragment.setRecipeDetailOnClickListener(this);
         //check whether if tablet mode or not
-        if (findViewById(R.id.two_pane) != null) {
+        if (isTablet()) {
             getSupportFragmentManager().beginTransaction().replace(R.id.two_pane_master, mRecipeDetailFragment, "RECIPE_DETAIL_FRAGMENT").commit();
         } else {
             getSupportFragmentManager().beginTransaction().replace(R.id.one_pane, mRecipeDetailFragment, "RECIPE_DETAIL_FRAGMENT").commit();
@@ -75,12 +74,21 @@ public class RecipeDetailActivity extends AppCompatActivity
         //load DetailStepFragment or ingredient lists if it is in tablet mode or start DetailStepActivity
 
         List<Step> stepList = recipeSelected.getSteps();
+        @SuppressWarnings("unchecked")
+        ArrayList<Ingredient> ingredientList = (ArrayList) recipeSelected.getIngredients();
         Step step;
 
         // tablet mode
         if (isTablet() && position == 0) {
-            // TODO: 2/6/18  load ingredient list and remove the DetailStepFragment if there is one
             Log.d(TAG, "recipeDetailOnClickListener: Tablet mode. Need to load ingredient list.");
+
+            IngredientFragment ingredientFragment = new IngredientFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("ingredient_list", ingredientList);
+            ingredientFragment.setArguments(bundle);
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.two_pane_detail, ingredientFragment).commit();
+
         } else if (isTablet() && position > 0 && position <= stepList.size()) {
             step = stepList.get(position - 1); // index adjustment to retrieve the correct step
             mDetailStepFragment = DetailStepFragment.newInstance(step);
@@ -88,7 +96,7 @@ public class RecipeDetailActivity extends AppCompatActivity
         } else if (!isTablet() && position == 0) {
             Log.d(TAG, "recipeDetailOnClickListener: Phone mode. Need to load ingredient list.");
             //in phone mode
-            ArrayList<Ingredient> ingredientList = (ArrayList) recipeSelected.getIngredients();
+
             Intent intent = new Intent(this, DetailStepActivity.class);
             intent.putExtra("ingredient_list", ingredientList);
 

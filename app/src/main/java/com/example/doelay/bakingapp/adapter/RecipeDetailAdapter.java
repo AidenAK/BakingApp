@@ -87,7 +87,7 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
             return VIEW_TYPE_STEP;
         }
     }
-
+    @SuppressWarnings("unchecked")
     public void setRecipe(Recipe recipe){
         recipeSelected = recipe;
         stepList = (ArrayList) recipeSelected.getSteps();
@@ -97,7 +97,6 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
     public abstract class RecipeDetailAdapterViewHolder extends RecyclerView.ViewHolder
                                                         implements View.OnClickListener{
 
-        // TODO: 2/2/18 add OnClickListener
         public abstract void bind(int position);
 
         public RecipeDetailAdapterViewHolder(View view) {
@@ -107,9 +106,7 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
 
         @Override
         public void onClick(View v) {
-            // TODO: 2/6/18 need to fix this
             int adapterPosition = getAdapterPosition();
-
             callback.recipeDetailOnClickListener(adapterPosition);
 
         }

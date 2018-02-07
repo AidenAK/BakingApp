@@ -55,7 +55,7 @@ public class IngredientFragment extends Fragment {
             ingredientList = savedInstanceState.getParcelableArrayList(INGREDIENT_LIST);
         } else {
             if(getArguments() != null) {
-                ingredientList = getArguments().getParcelableArrayList("ingredientList");
+                ingredientList = getArguments().getParcelableArrayList("ingredient_list");
             }
         }
     }
