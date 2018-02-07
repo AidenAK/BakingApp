@@ -22,6 +22,8 @@ public class DetailStepFragment extends Fragment{
     @BindView(R.id.tv_description)
     TextView description;
     // TODO: 2/6/18 need to add video player functionality
+    // TODO: 2/7/18 need to create a full screen layout for video player in landscape mode
+
 
     private Step step;
 
