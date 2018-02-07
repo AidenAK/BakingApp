@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 
 public class DetailStepActivity extends AppCompatActivity {
 
+    // TODO: 2/6/18 get the extra from intent
     // TODO: 2/6/18 need to load DetailStepFragment
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

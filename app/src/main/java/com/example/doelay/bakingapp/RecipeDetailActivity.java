@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.doelay.bakingapp.adapter.RecipeDetailAdapter;
+import com.example.doelay.bakingapp.model.Ingredient;
 import com.example.doelay.bakingapp.model.Recipe;
 import com.example.doelay.bakingapp.model.Step;
 
@@ -49,42 +50,60 @@ public class RecipeDetailActivity extends AppCompatActivity
                 if (extra.containsKey("recipeSelected")) {
                     recipeSelected = intent.getParcelableExtra("recipeSelected");
                     Log.d(TAG, "onCreate: Recipe name is " + recipeSelected.getName());
-
+                    mRecipeDetailFragment = RecipeDetailFragment.newInstance(recipeSelected);
                 }
             }
         } else {
             recipeSelected = savedInstanceState.getParcelable(RECIPE_SELECTED);
+            mRecipeDetailFragment = (RecipeDetailFragment) getSupportFragmentManager().findFragmentByTag("RECIPE_DETAIL_FRAGMENT");
             }
 
 
         getSupportActionBar().setTitle(recipeSelected.getName());
-        mRecipeDetailFragment = RecipeDetailFragment.newInstance(recipeSelected, this);
+        mRecipeDetailFragment.setRecipeDetailOnClickListener(this);
         //check whether if tablet mode or not
         if (findViewById(R.id.two_pane) != null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.two_pane_master, mRecipeDetailFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.two_pane_master, mRecipeDetailFragment, "RECIPE_DETAIL_FRAGMENT").commit();
         } else {
-            getSupportFragmentManager().beginTransaction().add(R.id.one_pane, mRecipeDetailFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.one_pane, mRecipeDetailFragment, "RECIPE_DETAIL_FRAGMENT").commit();
         }
     }
 
     @Override
     public void recipeDetailOnClickListener(int position) {
-        Log.d(TAG, "recipeDetailOnClickListener: adapter position is " + position);
-        //load DetailStepFragment if it is in tablet mode or start a DetailStepActivity
-        // TODO: 2/6/18 need to check the position for "0" or not
-        List<Step> stepList = recipeSelected.getSteps();
-        Step step = stepList.get(position);
+        Log.d(TAG, "recipeDetailOnClickListener: adapter position is " + position + "isTablet =" +isTablet());
+        //load DetailStepFragment or ingredient lists if it is in tablet mode or start DetailStepActivity
 
-        if(findViewById(R.id.two_pane) != null) {
-            //in tablet mode
+        List<Step> stepList = recipeSelected.getSteps();
+        Step step;
+
+        // tablet mode
+        if (isTablet() && position == 0) {
+            // TODO: 2/6/18  load ingredient list and remove the DetailStepFragment if there is one
+            Log.d(TAG, "recipeDetailOnClickListener: Tablet mode. Need to load ingredient list.");
+        } else if (isTablet() && position > 0 && position <= stepList.size()) {
+            step = stepList.get(position - 1); // index adjustment to retrieve the correct step
             mDetailStepFragment = DetailStepFragment.newInstance(step);
             getSupportFragmentManager().beginTransaction().replace(R.id.two_pane_detail, mDetailStepFragment).commit();
-        } else {
+        } else if (!isTablet() && position == 0) {
+            Log.d(TAG, "recipeDetailOnClickListener: Phone mode. Need to load ingredient list.");
             //in phone mode
+            ArrayList<Ingredient> ingredientList = (ArrayList) recipeSelected.getIngredients();
+            Intent intent = new Intent(this, DetailStepActivity.class);
+            intent.putExtra("ingredient_list", ingredientList);
+
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            } else {
+                Log.d(TAG, "recipeDetailOnClickListener: no activity to handle the intent");
+            }
+        } else if (!isTablet() && position > 0 && position <= stepList.size()) {
+            Log.d(TAG, "recipeDetailOnClickListener: Phone mode. Need to load DetailStepFragment.");
+            step = stepList.get(position - 1);
             Intent intent = new Intent(this, DetailStepActivity.class);
             intent.putExtra("step", step);
 
-            if(intent.resolveActivity(getPackageManager()) != null) {
+            if (intent.resolveActivity(getPackageManager()) != null) {
                 startActivity(intent);
             } else {
                 Log.d(TAG, "recipeDetailOnClickListener: no activity to handle the intent");
@@ -92,6 +111,9 @@ public class RecipeDetailActivity extends AppCompatActivity
         }
     }
 
+    private boolean isTablet() {
+        return findViewById(R.id.two_pane) != null;
+    }
     @Override
     protected void onResume() {
         super.onResume();

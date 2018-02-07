@@ -36,12 +36,8 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
         void recipeDetailOnClickListener (int position);
     }
 
-    public RecipeDetailAdapter(Context context){
-        try {
-            callback = (RecipeDetailOnClickListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + "must implement RecipeDetailOnClickListener");
-        }
+    public RecipeDetailAdapter(RecipeDetailOnClickListener callback){
+        this.callback = callback;
     }
 
 
@@ -111,13 +107,11 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
 
         @Override
         public void onClick(View v) {
+            // TODO: 2/6/18 need to fix this
             int adapterPosition = getAdapterPosition();
 
-            if(adapterPosition == 0) {
-                callback.recipeDetailOnClickListener(adapterPosition);
-            } else {
-                callback.recipeDetailOnClickListener(adapterPosition-1);//make adjustment for stepList index
-            }
+            callback.recipeDetailOnClickListener(adapterPosition);
+
         }
     }
 

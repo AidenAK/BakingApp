@@ -32,14 +32,13 @@ public class RecipeDetailFragment extends Fragment {
     private Recipe recipeSelected;
     private RecipeDetailAdapter mRecipeDetailAdapter;
     private LinearLayoutManager mLayoutManager;
-    private static Context mContext;
+    private RecipeDetailAdapter.RecipeDetailOnClickListener recipeDetailOnClickListener;
 
     public RecipeDetailFragment() {
        //empty constructor required
     }
 
-    public static RecipeDetailFragment newInstance(Recipe recipe, Context context) {
-        mContext = context;
+    public static RecipeDetailFragment newInstance(Recipe recipe) {
 
         RecipeDetailFragment mRecipeDetailFragment = new RecipeDetailFragment();
 
@@ -48,6 +47,10 @@ public class RecipeDetailFragment extends Fragment {
         mRecipeDetailFragment.setArguments(bundle);
 
         return mRecipeDetailFragment;
+    }
+
+    public void setRecipeDetailOnClickListener(RecipeDetailAdapter.RecipeDetailOnClickListener callback){
+        recipeDetailOnClickListener = callback;
     }
 
     @Override
@@ -75,7 +78,7 @@ public class RecipeDetailFragment extends Fragment {
         RecipeDetailRecyclerView.setLayoutManager(mLayoutManager);
         RecipeDetailRecyclerView.setHasFixedSize(true);
 
-        mRecipeDetailAdapter = new RecipeDetailAdapter(mContext);
+        mRecipeDetailAdapter = new RecipeDetailAdapter(recipeDetailOnClickListener);
         RecipeDetailRecyclerView.setAdapter(mRecipeDetailAdapter);
         mRecipeDetailAdapter.setRecipe(recipeSelected);
 
