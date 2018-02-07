@@ -90,12 +90,13 @@ public class RecipeDetailActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.two_pane_detail, ingredientFragment).commit();
 
         } else if (isTablet() && position > 0 && position <= stepList.size()) {
+
             step = stepList.get(position - 1); // index adjustment to retrieve the correct step
             mDetailStepFragment = DetailStepFragment.newInstance(step);
             getSupportFragmentManager().beginTransaction().replace(R.id.two_pane_detail, mDetailStepFragment).commit();
-        } else if (!isTablet() && position == 0) {
+
+        } else if (!isTablet() && position == 0) { //in phone mode
             Log.d(TAG, "recipeDetailOnClickListener: Phone mode. Need to load ingredient list.");
-            //in phone mode
 
             Intent intent = new Intent(this, DetailStepActivity.class);
             intent.putExtra("ingredient_list", ingredientList);

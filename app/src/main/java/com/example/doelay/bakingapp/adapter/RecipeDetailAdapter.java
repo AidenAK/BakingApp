@@ -95,7 +95,7 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
     }
 
     public abstract class RecipeDetailAdapterViewHolder extends RecyclerView.ViewHolder
-                                                        implements View.OnClickListener{
+            implements View.OnClickListener{
 
         public abstract void bind(int position);
 
