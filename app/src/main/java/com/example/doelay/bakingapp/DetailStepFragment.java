@@ -32,7 +32,9 @@ public class DetailStepFragment extends Fragment{
     @BindView(R.id.no_video)
     ImageView noVideoIcon;
 
-
+    // TODO: 2/14/18 save video playback state
+    // TODO: 2/15/18 add navigation button
+    // TODO: 2/15/18 add interface to handle navigation button
 
     private Step step;
     private VideoPlayerManager videoPlayerManager;

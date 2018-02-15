@@ -24,6 +24,7 @@ public class DetailStepActivity extends AppCompatActivity {
     private IngredientFragment ingredientFragment;
     private DetailStepFragment detailStepFragment;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,14 +56,10 @@ public class DetailStepActivity extends AppCompatActivity {
                 }
             }
         } else {
-            // TODO: 2/7/18 need to check if it is restore properly
+
             ingredientList = savedInstanceState.getParcelable("ingredient_list");
             step = savedInstanceState.getParcelable("step");
-
         }
-
-
-
     }
 
     @Override
@@ -71,4 +68,7 @@ public class DetailStepActivity extends AppCompatActivity {
         outState.putParcelableArrayList("ingredient_list", ingredientList);
         outState.putParcelable("step", step);
     }
+
+    // TODO: 2/15/18 implement a callback method to handle the Navigation button click
+    
 }
