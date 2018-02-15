@@ -67,6 +67,7 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
     public void onBindViewHolder(RecipeDetailAdapterViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: called");
         holder.bind(position);
+        // TODO: 2/8/18 add highlighting to the selected item
     }
 
     @Override

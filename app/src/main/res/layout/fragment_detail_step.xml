@@ -14,6 +14,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/horizontal_Line"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,4 +43,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/horizontal_Line"
         tools:text="Description"/>
+
+    <ImageView
+        android:id="@+id/no_video"
+        android:layout_width="115dp"
+        android:layout_height="133dp"
+        android:layout_marginBottom="68dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/horizontal_Line"
+        app:layout_constraintEnd_toEndOf="@+id/video_view"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="@+id/video_view"
+        app:layout_constraintTop_toTopOf="@+id/video_view"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/no_video"/>
+
 </android.support.constraint.ConstraintLayout>
