@@ -90,15 +90,13 @@ public class DetailStepFragment extends Fragment{
         } else {
             return true;
         }
-
-
     }
 
     private Uri getVideoUri() {
         Uri uri;
 
         try {
-            if(videoURL == "") {
+            if(videoURL.equals("")) {
                 uri = Uri.parse(thumbnailURL);
             } else {
                 uri = Uri.parse(videoURL);
