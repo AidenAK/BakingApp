@@ -6,11 +6,15 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.doelay.bakingapp.model.Ingredient;
 import com.example.doelay.bakingapp.model.Step;
 
 import java.util.ArrayList;
+
+import butterknife.BindView;
 
 /**
  * This class is responsible for loading ingredient list or ic_recipe detail step
@@ -20,12 +24,14 @@ public class DetailStepActivity extends AppCompatActivity {
     public static final String TAG = DetailStepActivity.class.getSimpleName();
 
 
+
     private ArrayList<Ingredient> ingredientList;
     private Step step;
     private ArrayList<Step> stepList;
-    private int stepIndex;
+    private int currentStepIndex;
     private IngredientFragment ingredientFragment;
     private DetailStepFragment detailStepFragment;
+    private int stepCount;
 
 
     @Override
@@ -51,11 +57,21 @@ public class DetailStepActivity extends AppCompatActivity {
                 } else if (extra.containsKey("step_list") && extra.containsKey("step_index")) {
 
                     stepList = intent.getParcelableArrayListExtra("step_list");
-                    stepIndex = intent.getIntExtra("step_index", -1);
-                    if (stepIndex != -1) {
-                        step = stepList.get(stepIndex);
-                        detailStepFragment = DetailStepFragment.newInstance(step);
+                    currentStepIndex = intent.getIntExtra("step_index", -1);
+                    if (currentStepIndex != -1) {
+                        step = stepList.get(currentStepIndex);
+                        stepCount = stepList.size();
+
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("step", step);
+                        bundle.putInt("current_step_index", currentStepIndex);
+                        bundle.putInt("step_count", stepCount);
+
+//                        detailStepFragment = DetailStepFragment.newInstance(step);
+                        detailStepFragment = new DetailStepFragment();
+                        detailStepFragment.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, detailStepFragment).commit();
+
                     }
 
                 } else {
@@ -67,7 +83,7 @@ public class DetailStepActivity extends AppCompatActivity {
             ingredientList = savedInstanceState.getParcelable("ingredient_list");
             step = savedInstanceState.getParcelable("step");
             stepList = savedInstanceState.getParcelableArrayList("step_list");
-            stepIndex = savedInstanceState.getInt("step_index");
+            currentStepIndex = savedInstanceState.getInt("step_index");
         }
     }
 
@@ -76,19 +92,21 @@ public class DetailStepActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("ingredient_list", ingredientList);
         outState.putParcelable("step", step);
-        outState.putParcelableArrayList("step_lsit", stepList);
-        outState.putInt("step_index", stepIndex);
+        outState.putParcelableArrayList("step_list", stepList);
+        outState.putInt("step_index", currentStepIndex);
     }
     public void onNavigationButtonClick(View view){
 
         switch(view.getId()) {
             case R.id.ib_previous :
                 Log.d(TAG, "onNavigationButtonClick: previous");
+
                 break;
             case R.id.ib_next :
                 Log.d(TAG, "onNavigationButtonClick: next");
         }
 
     }
+
 
 }

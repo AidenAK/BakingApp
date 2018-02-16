@@ -109,7 +109,6 @@ public class RecipeDetailActivity extends AppCompatActivity
         } else if (!isTablet() && position > 0 && position <= stepList.size()) {
             Log.d(TAG, "recipeDetailOnClickListener: Phone mode. Need to load DetailStepFragment.");
 
-            // TODO: 2/15/18 need to pass the step list instead of a single step
             int stepIndex = position - 1;
             Intent intent = new Intent(this, DetailStepActivity.class);
             intent.putExtra("step_index", stepIndex);
