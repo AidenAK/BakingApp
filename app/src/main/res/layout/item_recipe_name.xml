@@ -23,7 +23,7 @@
             android:padding="@dimen/recipe_icon_padding"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/recipe"/>
+            app:srcCompat="@drawable/ic_recipe"/>
 
         <TextView
             android:id="@+id/tv_recipe_name"

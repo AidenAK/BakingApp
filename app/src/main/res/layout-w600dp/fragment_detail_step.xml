@@ -46,6 +46,6 @@
         app:layout_constraintEnd_toEndOf="@+id/video_view"
         app:layout_constraintStart_toStartOf="@+id/video_view"
         app:layout_constraintTop_toTopOf="@+id/video_view"
-        app:srcCompat="@drawable/no_video"/>
+        app:srcCompat="@drawable/ic_no_video"/>
 
 </android.support.constraint.ConstraintLayout>

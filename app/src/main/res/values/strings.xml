@@ -4,4 +4,6 @@
     <string name="error_loading">Error loading the recipe list.</string>
     <string name="ingredients">Ingredients</string>
     <string name="ingredient_list">Ingredient List</string>
+    <string name="previous_step">previous</string>
+    <string name="next_step">next</string>
 </resources>

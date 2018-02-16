@@ -12,7 +12,7 @@ import com.example.doelay.bakingapp.model.Step;
 import java.util.ArrayList;
 
 /**
- * This class is responsible for loading ingredient list or recipe detail step
+ * This class is responsible for loading ingredient list or ic_recipe detail step
  */
 
 public class DetailStepActivity extends AppCompatActivity {
@@ -70,5 +70,5 @@ public class DetailStepActivity extends AppCompatActivity {
     }
 
     // TODO: 2/15/18 implement a callback method to handle the Navigation button click
-    
+
 }

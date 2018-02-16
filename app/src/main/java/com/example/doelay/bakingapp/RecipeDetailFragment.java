@@ -20,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * This class is responsible for displaying the ingredients and recipe steps
+ * This class is responsible for displaying the ingredients and ic_recipe steps
  */
 
 public class RecipeDetailFragment extends Fragment {
