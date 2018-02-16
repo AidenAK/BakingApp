@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
 import com.example.doelay.bakingapp.model.Ingredient;
 import com.example.doelay.bakingapp.model.Step;
@@ -67,6 +68,17 @@ public class DetailStepActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("ingredient_list", ingredientList);
         outState.putParcelable("step", step);
+    }
+    public void onNavigationButtonClick(View view){
+
+        switch(view.getId()) {
+            case R.id.ib_previous :
+                Log.d(TAG, "onNavigationButtonClick: previous");
+                break;
+            case R.id.ib_next :
+                Log.d(TAG, "onNavigationButtonClick: next");
+        }
+
     }
 
     // TODO: 2/15/18 implement a callback method to handle the Navigation button click

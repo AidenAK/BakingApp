@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import butterknife.ButterKnife;
  */
 
 public class DetailStepFragment extends Fragment{
+    public static final String TAG = DetailStepFragment.class.getSimpleName();
 
     @BindView(R.id.tv_description)
     TextView description;
@@ -33,7 +35,6 @@ public class DetailStepFragment extends Fragment{
     ImageView noVideoIcon;
 
     // TODO: 2/14/18 save video playback state
-    // TODO: 2/15/18 add navigation button
     // TODO: 2/15/18 add interface to handle navigation button
 
     private Step step;
@@ -82,6 +83,7 @@ public class DetailStepFragment extends Fragment{
 
         return view;
     }
+
 
     private boolean videoExists(){
         videoURL = step.getVideoURL();
