@@ -35,7 +35,6 @@ public class DetailStepFragment extends Fragment{
     ImageView noVideoIcon;
 
     // TODO: 2/14/18 save video playback state
-    // TODO: 2/15/18 add interface to handle navigation button
 
     private Step step;
     private VideoPlayerManager videoPlayerManager;

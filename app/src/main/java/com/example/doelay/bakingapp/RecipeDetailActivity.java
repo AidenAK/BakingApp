@@ -73,7 +73,7 @@ public class RecipeDetailActivity extends AppCompatActivity
         Log.d(TAG, "recipeDetailOnClickListener: adapter position is " + position + "isTablet =" +isTablet());
         //load DetailStepFragment or ingredient lists if it is in tablet mode or start DetailStepActivity
 
-        List<Step> stepList = recipeSelected.getSteps();
+        ArrayList<Step> stepList = (ArrayList) recipeSelected.getSteps();
         @SuppressWarnings("unchecked")
         ArrayList<Ingredient> ingredientList = (ArrayList) recipeSelected.getIngredients();
         Step step;
@@ -109,10 +109,11 @@ public class RecipeDetailActivity extends AppCompatActivity
         } else if (!isTablet() && position > 0 && position <= stepList.size()) {
             Log.d(TAG, "recipeDetailOnClickListener: Phone mode. Need to load DetailStepFragment.");
 
-            // TODO: 2/15/18 need to pass the step list instead of a signle step
-            step = stepList.get(position - 1);
+            // TODO: 2/15/18 need to pass the step list instead of a single step
+            int stepIndex = position - 1;
             Intent intent = new Intent(this, DetailStepActivity.class);
-            intent.putExtra("step", step);
+            intent.putExtra("step_index", stepIndex);
+            intent.putParcelableArrayListExtra("step_list", stepList);
 
             if (intent.resolveActivity(getPackageManager()) != null) {
                 startActivity(intent);

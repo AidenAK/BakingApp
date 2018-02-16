@@ -22,6 +22,8 @@ public class DetailStepActivity extends AppCompatActivity {
 
     private ArrayList<Ingredient> ingredientList;
     private Step step;
+    private ArrayList<Step> stepList;
+    private int stepIndex;
     private IngredientFragment ingredientFragment;
     private DetailStepFragment detailStepFragment;
 
@@ -46,11 +48,15 @@ public class DetailStepActivity extends AppCompatActivity {
                     ingredientFragment.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ingredientFragment).commit();
 
-                } else if (extra.containsKey("step")) {
+                } else if (extra.containsKey("step_list") && extra.containsKey("step_index")) {
 
-                    step = intent.getParcelableExtra("step");
-                    detailStepFragment = DetailStepFragment.newInstance(step);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, detailStepFragment).commit();
+                    stepList = intent.getParcelableArrayListExtra("step_list");
+                    stepIndex = intent.getIntExtra("step_index", -1);
+                    if (stepIndex != -1) {
+                        step = stepList.get(stepIndex);
+                        detailStepFragment = DetailStepFragment.newInstance(step);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, detailStepFragment).commit();
+                    }
 
                 } else {
                     Log.d(TAG, "onCreate: Invalid extra.");
@@ -60,6 +66,8 @@ public class DetailStepActivity extends AppCompatActivity {
 
             ingredientList = savedInstanceState.getParcelable("ingredient_list");
             step = savedInstanceState.getParcelable("step");
+            stepList = savedInstanceState.getParcelableArrayList("step_list");
+            stepIndex = savedInstanceState.getInt("step_index");
         }
     }
 
@@ -68,6 +76,8 @@ public class DetailStepActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("ingredient_list", ingredientList);
         outState.putParcelable("step", step);
+        outState.putParcelableArrayList("step_lsit", stepList);
+        outState.putInt("step_index", stepIndex);
     }
     public void onNavigationButtonClick(View view){
 
@@ -80,7 +90,5 @@ public class DetailStepActivity extends AppCompatActivity {
         }
 
     }
-
-    // TODO: 2/15/18 implement a callback method to handle the Navigation button click
 
 }
