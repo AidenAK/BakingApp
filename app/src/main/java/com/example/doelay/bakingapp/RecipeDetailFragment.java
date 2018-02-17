@@ -35,7 +35,7 @@ public class RecipeDetailFragment extends Fragment {
     private RecipeDetailAdapter.RecipeDetailOnClickListener recipeDetailOnClickListener;
 
     public RecipeDetailFragment() {
-       //empty constructor required
+
     }
 
     public static RecipeDetailFragment newInstance(Recipe recipe) {

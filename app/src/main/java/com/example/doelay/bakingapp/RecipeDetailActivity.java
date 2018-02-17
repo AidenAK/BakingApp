@@ -86,17 +86,20 @@ public class RecipeDetailActivity extends AppCompatActivity
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("ingredient_list", ingredientList);
             ingredientFragment.setArguments(bundle);
-
             getSupportFragmentManager().beginTransaction().replace(R.id.two_pane_detail, ingredientFragment).commit();
 
         } else if (isTablet() && position > 0 && position <= stepList.size()) {
+            Log.d(TAG, "recipeDetailOnClickListener: Tablet mode. Need to load DetailStepFragment.");
 
             step = stepList.get(position - 1); // index adjustment to retrieve the correct step
-            mDetailStepFragment = DetailStepFragment.newInstance(step);
+            mDetailStepFragment = new DetailStepFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("step", step);
+            mDetailStepFragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction().replace(R.id.two_pane_detail, mDetailStepFragment).commit();
 
         } else if (!isTablet() && position == 0) { //in phone mode
-            Log.d(TAG, "recipeDetailOnClickListener: Phone mode. Need to load ingredient list.");
+            Log.d(TAG, "recipeDetailOnClickListener: Phone mode. Need to load IngredientFragment through DetailStepActivity.");
 
             Intent intent = new Intent(this, DetailStepActivity.class);
             intent.putExtra("ingredient_list", ingredientList);
@@ -107,7 +110,7 @@ public class RecipeDetailActivity extends AppCompatActivity
                 Log.d(TAG, "recipeDetailOnClickListener: no activity to handle the intent");
             }
         } else if (!isTablet() && position > 0 && position <= stepList.size()) {
-            Log.d(TAG, "recipeDetailOnClickListener: Phone mode. Need to load DetailStepFragment.");
+            Log.d(TAG, "recipeDetailOnClickListener: Phone mode. Need to load DetailStepFragment through DetailStepActivity.");
 
             int stepIndex = position - 1;
             Intent intent = new Intent(this, DetailStepActivity.class);

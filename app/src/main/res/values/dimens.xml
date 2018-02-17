@@ -11,4 +11,5 @@
     <dimen name="ingredient_left_margin">16dp</dimen>
     <dimen name="step_card_view_height">65dp</dimen>
     <dimen name="navigation_button_dimension">50dp</dimen>
+    <dimen name="no_video_icon_dimension">100dp</dimen>
 </resources>

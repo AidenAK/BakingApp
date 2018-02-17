@@ -38,7 +38,9 @@ public class IngredientFragment extends Fragment {
     private IngredientAdapter ingredientAdapter;
     private ArrayList<Ingredient> ingredientList;
 
+    public IngredientFragment() {
 
+    }
     public static IngredientFragment newInstance(ArrayList<Ingredient> list){
 
         IngredientFragment mFragment = new IngredientFragment();

@@ -34,14 +34,7 @@ public class DetailStepFragment extends Fragment{
     SimpleExoPlayerView exoPlayerView;
     @BindView(R.id.no_video)
     ImageView noVideoIcon;
-    @BindView(R.id.ib_next)
-    ImageButton navigationNext;
-    @BindView(R.id.ib_previous)
-    ImageButton navigationPrevious;
-    @BindView(R.id.tv_previous)
-    TextView goToPrevious;
-    @BindView(R.id.tv_next)
-    TextView goToNext;
+
 
     // TODO: 2/14/18 save video playback state
 
@@ -52,12 +45,14 @@ public class DetailStepFragment extends Fragment{
     private String videoURL;
     private String thumbnailURL;
 
+    public DetailStepFragment() {
 
+    }
     public static DetailStepFragment newInstance(Step step) {
         DetailStepFragment detailStepFragment = new DetailStepFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putParcelable("Step", step);
+        bundle.putParcelable("step", step);
         detailStepFragment.setArguments(bundle);
 
         return detailStepFragment;
@@ -68,8 +63,8 @@ public class DetailStepFragment extends Fragment{
         super.onCreate(savedInstanceState);
         if(getArguments() != null) {
             step = getArguments().getParcelable("step");
-            currentStepIndex = getArguments().getInt("current_step_index");
-            stepCount = getArguments().getInt("step_count");
+//            currentStepIndex = getArguments().getInt("current_step_index");
+//            stepCount = getArguments().getInt("step_count");
             //set title
             ActionBar actionBar = ((AppCompatActivity) this.getActivity()).getSupportActionBar();
             actionBar.setTitle(step.getShortDescription());
@@ -82,7 +77,7 @@ public class DetailStepFragment extends Fragment{
 
         View view = inflater.inflate(R.layout.fragment_detail_step, container, false);
         ButterKnife.bind(this, view);
-//        boolean videoLink = videoExists();
+        boolean videoLink = videoExists();
         if(videoExists() ){
             //set up the video player
             videoPlayerManager = new VideoPlayerManager(getContext(), exoPlayerView);
@@ -91,22 +86,15 @@ public class DetailStepFragment extends Fragment{
             exoPlayerView.setVisibility(View.INVISIBLE);
             noVideoIcon.setVisibility(View.VISIBLE);
         }
+
+
         description.setText(step.getDescription());
-        setNavigationButtonVisibility();
+
 
         return view;
     }
-    private void setNavigationButtonVisibility() {
 
-        if(currentStepIndex == 0) {
-            navigationPrevious.setVisibility(View.INVISIBLE);
-            goToPrevious.setVisibility(View.INVISIBLE);
-        }
-        if(currentStepIndex == (stepCount-1)) {
-            navigationNext.setVisibility(View.INVISIBLE);
-            goToNext.setVisibility(View.INVISIBLE);
-        }
-    }
+
 
 
     private boolean videoExists(){

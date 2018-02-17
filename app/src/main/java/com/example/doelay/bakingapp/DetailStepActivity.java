@@ -25,6 +25,18 @@ public class DetailStepActivity extends AppCompatActivity {
 
 
 
+    @BindView(R.id.ib_next)
+    ImageButton navigationNext;
+
+    @BindView(R.id.ib_previous)
+    ImageButton navigationPrevious;
+
+    @BindView(R.id.tv_previous)
+    TextView goToPrevious;
+
+    @BindView(R.id.tv_next)
+    TextView goToNext;
+
     private ArrayList<Ingredient> ingredientList;
     private Step step;
     private ArrayList<Step> stepList;
@@ -87,6 +99,7 @@ public class DetailStepActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -94,6 +107,18 @@ public class DetailStepActivity extends AppCompatActivity {
         outState.putParcelable("step", step);
         outState.putParcelableArrayList("step_list", stepList);
         outState.putInt("step_index", currentStepIndex);
+    }
+
+    private void setNavigationButtonVisibility() {
+
+        if (currentStepIndex == 0) {
+            navigationPrevious.setVisibility(View.INVISIBLE);
+            goToPrevious.setVisibility(View.INVISIBLE);
+        }
+        if (currentStepIndex == (stepCount - 1)) {
+            navigationNext.setVisibility(View.INVISIBLE);
+            goToNext.setVisibility(View.INVISIBLE);
+        }
     }
     public void onNavigationButtonClick(View view){
 
