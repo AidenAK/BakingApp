@@ -23,6 +23,7 @@
         android:layout_marginTop="8dp"
         android:elevation="0dp"
         android:onClick="onNavigationButtonClick"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline"
@@ -37,6 +38,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/previous_step"
         android:textAlignment="center"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ib_previous"
         app:layout_constraintTop_toTopOf="@+id/guideline"/>
@@ -50,6 +52,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:onClick="onNavigationButtonClick"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline"
@@ -63,6 +66,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/next_step"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ib_next"
         app:layout_constraintTop_toTopOf="@+id/guideline"/>

@@ -84,6 +84,7 @@ public class IngredientFragment extends Fragment {
         ingredientRecyclerView.setAdapter(ingredientAdapter);
         ingredientAdapter.setIngredient(ingredientList);
 
+
         return view;
     }
 

@@ -58,10 +58,6 @@ public class DetailStepActivity extends AppCompatActivity {
             } else {
                 if (extra.containsKey("ingredient_list")) {
 
-                    //hide the navigation button
-                    hideNavigationButton();
-
-
                     ingredientList = intent.getParcelableArrayListExtra("ingredient_list");
                     ingredientFragment = new IngredientFragment();
                     Bundle bundle = new Bundle();
@@ -69,24 +65,16 @@ public class DetailStepActivity extends AppCompatActivity {
                     ingredientFragment.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, ingredientFragment).commit();
 
+                    //hide the navigation buttons since IngredientFragment doesn't need them
+                    hideNavigationButton();
+
                 } else if (extra.containsKey("step_list") && extra.containsKey("step_index")) {
 
                     stepList = intent.getParcelableArrayListExtra("step_list");
+                    stepCount = stepList.size();
                     currentStepIndex = intent.getIntExtra("step_index", -1);
                     if (currentStepIndex != -1) {
-                        step = stepList.get(currentStepIndex);
-                        stepCount = stepList.size();
-
-                        Bundle bundle = new Bundle();
-                        bundle.putParcelable("step", step);
-                        bundle.putInt("current_step_index", currentStepIndex);
-                        bundle.putInt("step_count", stepCount);
-
-//                        detailStepFragment = DetailStepFragment.newInstance(step);
-                        detailStepFragment = new DetailStepFragment();
-                        detailStepFragment.setArguments(bundle);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, detailStepFragment).commit();
-
+                        startDetailStepFragment();
                     }
 
                 } else {
@@ -99,6 +87,7 @@ public class DetailStepActivity extends AppCompatActivity {
             step = savedInstanceState.getParcelable("step");
             stepList = savedInstanceState.getParcelableArrayList("step_list");
             currentStepIndex = savedInstanceState.getInt("step_index");
+            stepCount = savedInstanceState.getInt("step_count");
         }
     }
 
@@ -122,28 +111,56 @@ public class DetailStepActivity extends AppCompatActivity {
         outState.putParcelable("step", step);
         outState.putParcelableArrayList("step_list", stepList);
         outState.putInt("step_index", currentStepIndex);
+        outState.putInt("step_count", stepCount);
     }
+
+    /**
+     * This method determine whether it should hide the navigation button Next or Previous
+     */
 
     private void setNavigationButtonVisibility() {
 
         if (currentStepIndex == 0) {
             navigationPrevious.setVisibility(View.INVISIBLE);
             goToPrevious.setVisibility(View.INVISIBLE);
-        }
-        if (currentStepIndex == (stepCount - 1)) {
+        } else if (currentStepIndex == (stepCount - 1)) {
             navigationNext.setVisibility(View.INVISIBLE);
             goToNext.setVisibility(View.INVISIBLE);
+        } else {
+            navigationPrevious.setVisibility(View.VISIBLE);
+            goToPrevious.setVisibility(View.VISIBLE);
+            navigationNext.setVisibility(View.VISIBLE);
+            goToNext.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void startDetailStepFragment() {
+        step = stepList.get(currentStepIndex);
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("step", step);
+
+        detailStepFragment = new DetailStepFragment();
+        detailStepFragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, detailStepFragment).commit();
+        setNavigationButtonVisibility();
     }
     public void onNavigationButtonClick(View view){
 
         switch(view.getId()) {
             case R.id.ib_previous :
                 Log.d(TAG, "onNavigationButtonClick: previous");
-
+                if(currentStepIndex != 0) {
+                    currentStepIndex = currentStepIndex - 1;
+                    startDetailStepFragment();
+                }
                 break;
             case R.id.ib_next :
                 Log.d(TAG, "onNavigationButtonClick: next");
+                if(currentStepIndex != stepCount - 1) {
+                    currentStepIndex = currentStepIndex + 1;
+                    startDetailStepFragment();
+                }
         }
 
     }

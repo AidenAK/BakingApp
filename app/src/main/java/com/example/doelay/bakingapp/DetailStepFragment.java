@@ -39,8 +39,6 @@ public class DetailStepFragment extends Fragment{
     // TODO: 2/14/18 save video playback state
 
     private Step step;
-    private int stepCount;
-    private int currentStepIndex;
     private VideoPlayerManager videoPlayerManager;
     private String videoURL;
     private String thumbnailURL;
@@ -63,8 +61,7 @@ public class DetailStepFragment extends Fragment{
         super.onCreate(savedInstanceState);
         if(getArguments() != null) {
             step = getArguments().getParcelable("step");
-//            currentStepIndex = getArguments().getInt("current_step_index");
-//            stepCount = getArguments().getInt("step_count");
+
             //set title
             ActionBar actionBar = ((AppCompatActivity) this.getActivity()).getSupportActionBar();
             actionBar.setTitle(step.getShortDescription());
