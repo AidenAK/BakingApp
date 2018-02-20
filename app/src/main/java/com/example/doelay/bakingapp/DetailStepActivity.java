@@ -15,6 +15,7 @@ import com.example.doelay.bakingapp.model.Step;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * This class is responsible for loading ingredient list or ic_recipe detail step
@@ -27,13 +28,10 @@ public class DetailStepActivity extends AppCompatActivity {
 
     @BindView(R.id.ib_next)
     ImageButton navigationNext;
-
     @BindView(R.id.ib_previous)
     ImageButton navigationPrevious;
-
     @BindView(R.id.tv_previous)
     TextView goToPrevious;
-
     @BindView(R.id.tv_next)
     TextView goToNext;
 
@@ -50,6 +48,7 @@ public class DetailStepActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_step);
+        ButterKnife.bind(this);
 
         if(savedInstanceState == null) {
             Intent intent = getIntent();
@@ -58,6 +57,10 @@ public class DetailStepActivity extends AppCompatActivity {
                 return;
             } else {
                 if (extra.containsKey("ingredient_list")) {
+
+                    //hide the navigation button
+                    hideNavigationButton();
+
 
                     ingredientList = intent.getParcelableArrayListExtra("ingredient_list");
                     ingredientFragment = new IngredientFragment();
@@ -99,6 +102,18 @@ public class DetailStepActivity extends AppCompatActivity {
         }
     }
 
+    private void hideNavigationButton() {
+        navigationNext.setVisibility(View.INVISIBLE);
+        goToNext.setVisibility(View.INVISIBLE);
+        navigationPrevious.setVisibility(View.INVISIBLE);
+        goToPrevious.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    protected void onStart() {
+
+        super.onStart();
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
