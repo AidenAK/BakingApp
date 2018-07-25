@@ -32,6 +32,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
 
     public interface OnRecipeSelectedListener {
         void onRecipeSelected(int position);
+        void onRecipeSelectedForWidget(int position);
     }
 
     public RecipeAdapter(Context mContext) {
@@ -73,7 +74,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
     }
 
     public class RecipeAdapterViewHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener {
+            implements View.OnClickListener, View.OnLongClickListener {
 
         // TODO: 10/5/17 try OnTouchListener
         @BindView(tv_recipe_name) TextView recipeName;
@@ -88,6 +89,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
         public void onClick(View mView) {
             int adapterPosition = getAdapterPosition();
             callback.onRecipeSelected(adapterPosition);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            int adapterPosition = getAdapterPosition();
+            callback.onRecipeSelectedForWidget(adapterPosition);
+            return false;
         }
     }
 }
