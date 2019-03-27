@@ -6,4 +6,6 @@
     <string name="ingredient_list">Ingredient List</string>
     <string name="previous_step">previous</string>
     <string name="next_step">next</string>
+    <string name="appwidget_text">RECEIPE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

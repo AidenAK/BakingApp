@@ -17,7 +17,7 @@ import com.example.doelay.bakingapp.adapter.RecipeAdapter;
 import com.example.doelay.bakingapp.model.Recipe;
 import com.example.doelay.bakingapp.networking.ApiBaseUrl;
 import com.example.doelay.bakingapp.networking.ApiService;
-import com.example.doelay.bakingapp.widget.RecipeWidgetProvider;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,8 +148,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onRecipeSelectedForWidget(int position) {
-        Recipe recipeSelectedForWidget = recipeList.get(position);
-        RecipeWidgetProvider.setRecipeSelected(recipeSelectedForWidget);
+//        Recipe recipeSelectedForWidget = recipeList.get(position);
+//        RecipeWidgetProvider.setRecipeSelected(recipeSelectedForWidget);
     }
 
     private void showLoadingBar() {
