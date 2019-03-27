@@ -7,7 +7,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.doelay.bakingapp.R;
 import com.example.doelay.bakingapp.model.Recipe;
@@ -17,11 +19,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.doelay.bakingapp.R.id.iv_add_receipe;
 import static com.example.doelay.bakingapp.R.id.tv_recipe_name;
 
-/**
- * Created by doelay on 10/5/17.
- */
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdapterViewHolder> {
     private static final String TAG = RecipeAdapter.class.getSimpleName();
@@ -76,19 +76,29 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
     public class RecipeAdapterViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener, View.OnLongClickListener {
 
-        // TODO: 10/5/17 try OnTouchListener
         @BindView(tv_recipe_name) TextView recipeName;
+        @BindView(iv_add_receipe) ImageView addRecipeToWidget;
 
-        public RecipeAdapterViewHolder(View view) {
+        public RecipeAdapterViewHolder(final View view) {
             super(view);
             ButterKnife.bind(this, view);
             view.setOnClickListener(this);
+            recipeName.setOnClickListener(this);
+            addRecipeToWidget.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View mView) {
-            int adapterPosition = getAdapterPosition();
-            callback.onRecipeSelected(adapterPosition);
+
+            Log.d(TAG, "onClick: The view Id is "+ mView.getId());
+            if(mView.getId() == recipeName.getId()) {
+                int adapterPosition = getAdapterPosition();
+                callback.onRecipeSelected(adapterPosition);
+            } else {
+                // TODO: 3/27/2019 Add the recipe to widget.
+                Toast.makeText(mView.getContext(), "Recipe added to homesccreen widget!", Toast.LENGTH_SHORT).show();
+            }
+
         }
 
         @Override
