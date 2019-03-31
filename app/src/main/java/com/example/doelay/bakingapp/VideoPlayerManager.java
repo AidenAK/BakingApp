@@ -52,6 +52,10 @@ public class VideoPlayerManager implements ExoPlayer.EventListener {
 
     }
 
+    public VideoPlayerManager() {
+        super();
+    }
+
     private void initializeMediaSession() {
 
         mediaSession = new MediaSessionCompat(context, TAG);
@@ -108,10 +112,6 @@ public class VideoPlayerManager implements ExoPlayer.EventListener {
     }
 
 
-    @Override
-    public void onTimelineChanged(Timeline timeline, Object manifest) {
-
-    }
 
     @Override
     public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
@@ -139,13 +139,35 @@ public class VideoPlayerManager implements ExoPlayer.EventListener {
 
     }
 
+
     @Override
-    public void onPositionDiscontinuity() {
+    public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+
+    }
+    @Override
+    public void onSeekProcessed() {
 
     }
 
     @Override
-    public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+    public void onPositionDiscontinuity(int reason) {
+
+    }
+
+
+
+    @Override
+    public void onTimelineChanged(Timeline timeline, Object manifest, int reason) {
+
+    }
+
+    @Override
+    public void onRepeatModeChanged(int repeatMode) {
+
+    }
+
+    @Override
+    public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {
 
     }
 }

@@ -2,6 +2,10 @@ package com.example.doelay.bakingapp;
 
 import android.content.Intent;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,10 +17,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.doelay.bakingapp.IdlingResource.SimpleIdlingResource;
 import com.example.doelay.bakingapp.adapter.RecipeAdapter;
 import com.example.doelay.bakingapp.model.Recipe;
 import com.example.doelay.bakingapp.networking.ApiBaseUrl;
 import com.example.doelay.bakingapp.networking.ApiService;
+import com.example.doelay.bakingapp.widget.RecipeWidgetProvider;
+import com.example.doelay.bakingapp.widget.UpdateRecipeWidgetIntentService;
 
 
 import java.util.ArrayList;
@@ -50,6 +57,18 @@ public class MainActivity extends AppCompatActivity
     private GridLayoutManager layoutManager;
     private Parcelable recyclerViewState;
 
+    @Nullable
+    private SimpleIdlingResource mIdlingResource;
+
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResoruce() {
+        if (mIdlingResource == null) {
+            mIdlingResource = new SimpleIdlingResource();
+        }
+        return mIdlingResource;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +83,8 @@ public class MainActivity extends AppCompatActivity
 
         recipeAdapter = new RecipeAdapter(this);
         recipeRecyclerView.setAdapter(recipeAdapter);
+
+        getIdlingResoruce();
 
         if(savedInstanceState == null) {
             makeApiRequest();
@@ -103,6 +124,11 @@ public class MainActivity extends AppCompatActivity
 
     private void makeApiRequest() {
 
+
+        if(mIdlingResource != null) {
+            mIdlingResource.setIdleState(false);
+        }
+
         showLoadingBar();
         ApiService mApiService = ApiBaseUrl.getRetrofit().create(ApiService.class);
         mApiService.getRecipe().enqueue(new Callback<List<Recipe>>() {
@@ -113,6 +139,7 @@ public class MainActivity extends AppCompatActivity
                     recipeList = response.body();//save a copy to restore data
                     recipeAdapter.setRecipeList(recipeList);//pass the data to the adapter
                     showRecipeList();
+
                     Log.d(TAG, "onResponse: " + recipeList.size());
                 } else {
                     int statusCode = response.code();
@@ -126,6 +153,7 @@ public class MainActivity extends AppCompatActivity
                 Log.d(TAG, "onFailure: "+ t.getMessage());
             }
         });
+        mIdlingResource.setIdleState(true);
     }
 
     @Override
@@ -143,13 +171,12 @@ public class MainActivity extends AppCompatActivity
         } else {
             Log.d(TAG, "onRecipeSelected: No activity to handle the intent!");
         }
-
     }
 
     @Override
     public void onRecipeSelectedForWidget(int position) {
-//        Recipe recipeSelectedForWidget = recipeList.get(position);
-//        RecipeWidgetProvider.setRecipeSelected(recipeSelectedForWidget);
+        Recipe recipeSelectedForWidget = recipeList.get(position);
+        UpdateRecipeWidgetIntentService.startActionUpdateRecipeWidget(this, recipeSelectedForWidget);
     }
 
     private void showLoadingBar() {

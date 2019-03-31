@@ -74,7 +74,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
     }
 
     public class RecipeAdapterViewHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener, View.OnLongClickListener {
+            implements View.OnClickListener{
 
         @BindView(tv_recipe_name) TextView recipeName;
         @BindView(iv_add_receipe) ImageView addRecipeToWidget;
@@ -91,21 +91,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
         public void onClick(View mView) {
 
             Log.d(TAG, "onClick: The view Id is "+ mView.getId());
-            if(mView.getId() == recipeName.getId()) {
-                int adapterPosition = getAdapterPosition();
-                callback.onRecipeSelected(adapterPosition);
-            } else {
-                // TODO: 3/27/2019 Add the recipe to widget.
-                Toast.makeText(mView.getContext(), "Recipe added to homesccreen widget!", Toast.LENGTH_SHORT).show();
-            }
-
-        }
-
-        @Override
-        public boolean onLongClick(View v) {
             int adapterPosition = getAdapterPosition();
-            callback.onRecipeSelectedForWidget(adapterPosition);
-            return false;
+            if(mView.getId() == addRecipeToWidget.getId()) {
+                Toast.makeText(mView.getContext(), "Recipe added to homescreen widget!", Toast.LENGTH_SHORT).show();
+                callback.onRecipeSelectedForWidget(adapterPosition);
+
+            } else {
+                callback.onRecipeSelected(adapterPosition);
+            }
         }
     }
 }
