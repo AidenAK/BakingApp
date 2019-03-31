@@ -30,9 +30,6 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
-/**
- * Created by doelay on 2/14/18.
- */
 
 public class VideoPlayerManager implements ExoPlayer.EventListener {
 

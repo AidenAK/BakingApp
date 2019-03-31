@@ -88,6 +88,21 @@ public class DetailStepActivity extends AppCompatActivity {
             stepList = savedInstanceState.getParcelableArrayList("step_list");
             currentStepIndex = savedInstanceState.getInt("step_index");
             stepCount = savedInstanceState.getInt("step_count");
+
+            if(savedInstanceState.getBoolean("navigation_previous")) {
+                navigationPrevious.setVisibility(View.VISIBLE);
+                goToPrevious.setVisibility(View.VISIBLE);
+            } else {
+                navigationPrevious.setVisibility(View.INVISIBLE);
+                goToPrevious.setVisibility(View.INVISIBLE);
+            }
+            if(savedInstanceState.getBoolean("navigation_next")) {
+                navigationNext.setVisibility(View.VISIBLE);
+                goToNext.setVisibility(View.VISIBLE);
+            } else {
+                navigationNext.setVisibility(View.INVISIBLE);
+                goToNext.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
@@ -100,8 +115,9 @@ public class DetailStepActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-
         super.onStart();
+
+
     }
 
     @Override
@@ -112,6 +128,26 @@ public class DetailStepActivity extends AppCompatActivity {
         outState.putParcelableArrayList("step_list", stepList);
         outState.putInt("step_index", currentStepIndex);
         outState.putInt("step_count", stepCount);
+
+        if (isVisible(navigationNext)){
+            outState.putBoolean("navigation_next", true);
+        }else {
+            outState.putBoolean("navigation_next", false);
+        }
+        if (isVisible(navigationPrevious)){
+            outState.putBoolean("navigation_previous", true);
+        }else {
+            outState.putBoolean("navigation_previous", false);
+        }
+    }
+
+
+    private Boolean isVisible(View view){
+        if (view.getVisibility() == View.VISIBLE) {
+             return true;
+        } else {
+            return false;
+        }
     }
 
     /**

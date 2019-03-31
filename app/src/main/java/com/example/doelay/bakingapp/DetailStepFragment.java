@@ -21,9 +21,6 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by doelay on 11/13/17.
- */
 
 public class DetailStepFragment extends Fragment{
     public static final String TAG = DetailStepFragment.class.getSimpleName();
@@ -35,8 +32,6 @@ public class DetailStepFragment extends Fragment{
     @BindView(R.id.no_video)
     ImageView noVideoIcon;
 
-
-    // TODO: 2/14/18 save video playback state
 
     private Step step;
     private VideoPlayerManager videoPlayerManager;

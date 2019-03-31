@@ -3,9 +3,7 @@ package com.example.doelay.bakingapp.networking;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by doelay on 10/4/17.
- */
+
 
 public final class ApiBaseUrl {
     private static final String TAG = ApiBaseUrl.class.getSimpleName();

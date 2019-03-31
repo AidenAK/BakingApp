@@ -1,8 +1,5 @@
 package com.example.doelay.bakingapp.model;
 
-/**
- * Created by doelay on 10/4/17.
- */
 
 import android.os.Parcel;
 import android.os.Parcelable;

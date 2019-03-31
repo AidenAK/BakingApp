@@ -17,9 +17,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by doelay on 2/2/18.
- */
 
 public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapter.RecipeDetailAdapterViewHolder> {
 
@@ -67,7 +64,6 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
     public void onBindViewHolder(RecipeDetailAdapterViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: called");
         holder.bind(position);
-        // TODO: 2/8/18 add highlighting to the selected item
     }
 
     @Override

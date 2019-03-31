@@ -124,7 +124,6 @@ public class MainActivity extends AppCompatActivity
 
     private void makeApiRequest() {
 
-
         if(mIdlingResource != null) {
             mIdlingResource.setIdleState(false);
         }
@@ -138,6 +137,7 @@ public class MainActivity extends AppCompatActivity
                 if(response.isSuccessful()) {
                     recipeList = response.body();//save a copy to restore data
                     recipeAdapter.setRecipeList(recipeList);//pass the data to the adapter
+
                     showRecipeList();
 
                     Log.d(TAG, "onResponse: " + recipeList.size());
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity
 
         Recipe recipeSelected = recipeList.get(position);
 
-        Intent intent = new Intent(this, RecipeDetailActivity.class);
+        Intent intent = new Intent(MainActivity.this, RecipeDetailActivity.class);
         intent.putExtra("recipeSelected", recipeSelected);
 
         if(intent.resolveActivity(getPackageManager()) != null) {
