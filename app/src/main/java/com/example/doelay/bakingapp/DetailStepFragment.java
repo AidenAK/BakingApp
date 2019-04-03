@@ -15,8 +15,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.doelay.bakingapp.model.Step;
+import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.util.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -86,9 +88,6 @@ public class DetailStepFragment extends Fragment{
         return view;
     }
 
-
-
-
     private boolean videoExists(){
         videoURL = step.getVideoURL();
         thumbnailURL = step.getThumbnailURL();
@@ -115,6 +114,28 @@ public class DetailStepFragment extends Fragment{
         }
 
         return uri;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (Util.SDK_INT <= 23) {
+            // release player
+            if(videoPlayerManager != null) {
+                videoPlayerManager.releasePlayer();
+            }
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (Util.SDK_INT > 23) {
+            // release player
+            if(videoPlayerManager != null) {
+                videoPlayerManager.releasePlayer();
+            }
+        }
     }
 
     @Override
