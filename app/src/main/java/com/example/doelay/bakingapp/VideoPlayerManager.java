@@ -40,6 +40,9 @@ public class VideoPlayerManager implements ExoPlayer.EventListener {
     private SimpleExoPlayerView exoPlayerView;
     private MediaSessionCompat mediaSession;
     private PlaybackStateCompat.Builder playbackStateBuilder;
+    private long playbackPosition;
+    private int currentWindow;
+    private boolean playWhenReady;
 
 
     public VideoPlayerManager(Context context, SimpleExoPlayerView exoPlayerView) {
@@ -102,10 +105,16 @@ public class VideoPlayerManager implements ExoPlayer.EventListener {
 
     }
 
+
     public void releasePlayer() {
-        exoPlayer.stop();
-        exoPlayer.release();
-        exoPlayer = null;
+        if (exoPlayer != null) {
+            playbackPosition = exoPlayer.getCurrentPosition();
+            currentWindow = exoPlayer.getCurrentWindowIndex();
+            playWhenReady = exoPlayer.getPlayWhenReady();
+            exoPlayer.release();
+            exoPlayer = null;
+        }
+//        mediaSession.setActive(false);
     }
 
 
