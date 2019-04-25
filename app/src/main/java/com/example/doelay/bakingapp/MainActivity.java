@@ -1,7 +1,9 @@
 package com.example.doelay.bakingapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 
 import com.example.doelay.bakingapp.IdlingResource.SimpleIdlingResource;
 import com.example.doelay.bakingapp.adapter.RecipeAdapter;
+import com.example.doelay.bakingapp.model.Ingredient;
 import com.example.doelay.bakingapp.model.Recipe;
 import com.example.doelay.bakingapp.networking.ApiBaseUrl;
 import com.example.doelay.bakingapp.networking.ApiService;
@@ -175,7 +178,19 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onRecipeSelectedForWidget(int position) {
+
         Recipe recipeSelectedForWidget = recipeList.get(position);
+
+        String ingredientListString = Utils.toIngredientString(recipeSelectedForWidget.getIngredients());
+
+        //save the ingredientListString in SharePreferences
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("ingredient_list_string",ingredientListString);
+        editor.putString("recipe_name", recipeSelectedForWidget.getImage());
+        Log.d(TAG, "onRecipeSelectedForWidget: "+ ingredientListString);
+        editor.apply();
+
         UpdateRecipeWidgetIntentService.startActionUpdateRecipeWidget(this, recipeSelectedForWidget);
     }
 

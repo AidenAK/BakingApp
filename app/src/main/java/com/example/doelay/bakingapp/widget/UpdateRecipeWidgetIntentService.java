@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.example.doelay.bakingapp.R;
 import com.example.doelay.bakingapp.model.Recipe;
 
 public class UpdateRecipeWidgetIntentService extends IntentService {
@@ -47,6 +48,7 @@ public class UpdateRecipeWidgetIntentService extends IntentService {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, RecipeWidgetProvider.class));
 
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.layout.recipe_widget_list_view);
         RecipeWidgetProvider.updateAppWidgets(this, appWidgetManager, appWidgetIds, recipeSelected);
     }
 }
