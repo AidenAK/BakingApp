@@ -50,5 +50,6 @@ public class UpdateRecipeWidgetIntentService extends IntentService {
 
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.layout.recipe_widget_list_view);
         RecipeWidgetProvider.updateAppWidgets(this, appWidgetManager, appWidgetIds, recipeSelected);
+        
     }
 }
